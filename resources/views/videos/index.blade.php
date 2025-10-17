@@ -3,18 +3,10 @@
 @section('title', 'Video - TIBA Surabaya')
 
 @section('content')
-    <h2 class="section-title">Galeri Video</h2>
-    <p class="section-subtitle">Belajar Bahasa Isyarat Indonesia (BISINDO)</p>
-    <p class="section-description">Pelajari bahasa isyarat dasar untuk berkomunikasi dengan teman tuli dan tingkatkan inklusivitas dalam masyarakat melalui koleksi video pembelajaran kami.</p>
-
-    {{-- Video Search Bar --}}
-    <div class="video-search-bar mb-4">
-        <div class="input-group">
-            <input type="text" id="videoSearchInput" class="form-control" placeholder="Cari video...">
-            <button class="btn btn-outline-secondary" type="button">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
+    <div class="video-header">
+        <h2 class="section-title">Galeri Video</h2>
+        <p class="section-subtitle">Belajar Bahasa Isyarat Indonesia (BISINDO)</p>
+        <p class="section-description">Pelajari bahasa isyarat dasar untuk berkomunikasi dengan teman tuli dan tingkatkan inklusivitas dalam masyarakat melalui koleksi video pembelajaran kami.</p>
     </div>
 
     <div id="video-list" class="row g-4">

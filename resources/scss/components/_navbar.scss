@@ -5,6 +5,7 @@
     transform: translateY(0);
     will-change: transform;
     z-index: 1000;
+    background-color: transparent;
 
     // Style untuk landing page
     &.navbar-landing {
@@ -194,13 +195,9 @@ body.scrolled {
     }
 
     // Adjust spacing for mobile
-    body {
-        padding-top: 75px;
-    }
-
-    main,
-    .content-wrapper,
-    .artikel-section {
-        margin-top: 75px;
+    main {
+        margin-top: 0;
+        padding-top: 85px;
+        background-color: transparent;
     }
 }

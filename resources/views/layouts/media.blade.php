@@ -17,14 +17,14 @@
 
     @stack('styles')
 </head>
-<body>
+<body style="background-color: #f5f5f5;">
     {{-- Navbar Component --}}
     <x-navbar />
 
     {{-- Main Content dengan spacing untuk fixed navbar --}}
-    <main class="main-content">
+    <main class="main-content" style="margin-top: 100px; padding-top: 2rem; padding-bottom: 4rem; background-color: #f5f5f5;">
         <div class="container">
-            <div class="row">
+            <div class="row" style="--bs-gutter-x: 3rem;">
                 {{-- Main Content Area --}}
                 <div class="col-lg-8">
                     @yield('content')

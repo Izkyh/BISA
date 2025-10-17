@@ -1,20 +1,17 @@
 <div class="sidebar">
-    {{-- Search Bar --}}
-    <div class="sidebar-search mb-4">
-        <div class="sidebar-box">
-            <div class="input-group">
-                <input type="text" id="sidebarSearchInput" class="form-control" placeholder="Cari di sidebar...">
-                <button class="btn btn-outline-secondary" type="button">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
     {{-- Artikel Terbaru --}}
     <div class="sidebar-section">
         <div class="sidebar-box">
             <h6>Artikel Terbaru</h6>
+            {{-- Search Bar --}}
+            <div class="sidebar-search">
+                <div class="input-group">
+                    <input type="text" id="sidebarSearchInput" class="form-control" placeholder="Cari di sidebar...">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
             <ul class="sidebar-list">
                 @forelse($popularArticles ?? [] as $index => $article)
                     <li class="sidebar-item">

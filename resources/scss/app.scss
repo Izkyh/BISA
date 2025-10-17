@@ -4,12 +4,27 @@
 // === VARIABLES ===
 @import 'variables';
 
+// Global styles
+body {
+    background-color: #f5f5f5;
+    min-height: 100vh;
+}
+
+.main-content {
+    background-color: transparent;
+    padding-top: 120px; // Menambah jarak dari navbar
+}
+
+// === LAYOUT ===
+@import 'components/layout';
+
 // === COMPONENTS ===
 @import 'components/navbar';
 @import 'components/sidebar';
 @import 'components/footer';
 @import 'components/article-card';
 @import 'components/article-detail';
+@import 'components/video';
 @import 'components/video-card';
 @import 'components/event-card';
 @import 'components/pagination';
