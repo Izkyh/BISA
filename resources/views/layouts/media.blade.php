@@ -9,14 +9,11 @@
     {{-- Fonts --}}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    {{-- Bootstrap CSS --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
     {{-- Font Awesome --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
 
-    {{-- Custom SCSS --}}
-    @vite(['resources/scss/app.scss'])
+    {{-- Vite Assets --}}
+    @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
     @stack('styles')
 </head>
@@ -24,41 +21,62 @@
     {{-- Navbar Component --}}
     <x-navbar />
 
-    {{-- Main Content with Sidebar --}}
-    <div class="container main-content">
-        <div class="row">
-            {{-- Main Content Area --}}
-            <div class="col-lg-8">
-                @yield('content')
-            </div>
+    {{-- Main Content dengan spacing untuk fixed navbar --}}
+    <main class="main-content">
+        <div class="container">
+            <div class="row">
+                {{-- Main Content Area --}}
+                <div class="col-lg-8">
+                    @yield('content')
+                </div>
 
-            {{-- Sidebar Area --}}
-            <div class="col-lg-4">
-                <x-sidebar
-                    :popularArticles="$popularArticles ?? []"
-                    :upcomingEvents="$upcomingEvents ?? []"
-                />
+                {{-- Sidebar Area --}}
+                <div class="col-lg-4">
+                    <x-sidebar
+                        :popularArticles="$popularArticles ?? []"
+                        :upcomingEvents="$upcomingEvents ?? []"
+                    />
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
     {{-- Footer Component --}}
     <x-footer />
 
-    {{-- Bootstrap JS --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
     {{-- Navbar Scroll Script --}}
     <script>
-        const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) navbar.classList.add('scrolled');
-        window.onscroll = () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbar = document.querySelector('.navbar');
+            const body = document.body;
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                    body.classList.add('navbar-scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                    body.classList.remove('navbar-scrolled');
+                }
+            });
+
+            // Close mobile menu when clicking nav link
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            const navbarCollapse = document.querySelector('.navbar-collapse');
+
+            if (navLinks.length && navbarCollapse) {
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
+                            const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                            if (bsCollapse) {
+                                bsCollapse.hide();
+                            }
+                        }
+                    });
+                });
             }
-        };
+        });
     </script>
 
     @stack('scripts')

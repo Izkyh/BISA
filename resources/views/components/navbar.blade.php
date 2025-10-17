@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg fixed-top">
+<nav class="navbar navbar-expand-lg fixed-top {{ request()->routeIs('home') ? 'navbar-landing' : 'navbar-page' }}">
     <div class="container">
         <a class="navbar-brand" href="{{ route('home') }}">
             <img src="{{ asset('foto/Frame 54.png') }}" alt="Logo TIBA">

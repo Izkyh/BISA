@@ -1,15 +1,33 @@
+// navbar.scss - Fixed version
 .navbar {
     padding: 1rem 0;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    background-color: #1a1a1a;
     transform: translateY(0);
     will-change: transform;
+    z-index: 1000;
 
-    &.scrolled {
-        background-color: rgba(26, 26, 26, 0.95);
-        padding: 0.5rem 0;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    // Style untuk landing page
+    &.navbar-landing {
+        background-color: transparent;
+
+        &.scrolled {
+            background-color: #1a1a1a;
+            padding: 0.5rem 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    // Style untuk halaman lain
+    &.navbar-page {
+        background-color: #1a1a1a;
+
+        &.scrolled {
+            background-color: rgba(26, 26, 26, 0.95);
+            padding: 0.5rem 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
     }
 
     &.navbar-hidden {
@@ -97,7 +115,7 @@
             }
         }
 
-            .dropdown-item {
+        .dropdown-item {
             color: var(--dark-color);
             padding: 0.75rem 1.5rem;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -135,6 +153,21 @@
     }
 }
 
+// CRITICAL: Add spacing for fixed navbar
+body {
+    padding-top: 76px; // Sesuaikan dengan tinggi navbar
+}
+
+// Khusus untuk landing page
+body.home {
+    padding-top: 0;
+}
+
+// Spacing saat scroll
+body.scrolled {
+    padding-top: 66px;
+}
+
 // Responsive
 @media (max-width: 991.98px) {
     .navbar {
@@ -158,5 +191,16 @@
             margin-left: 1rem;
             margin-top: 0.5rem;
         }
+    }
+
+    // Adjust spacing for mobile
+    body {
+        padding-top: 75px;
+    }
+
+    main,
+    .content-wrapper,
+    .artikel-section {
+        margin-top: 75px;
     }
 }

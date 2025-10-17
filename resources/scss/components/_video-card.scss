@@ -1,75 +1,101 @@
-.video-card-col {
-    display: block;
+/* =============================
+   Header Galeri Video (match gambar 1)
+   ============================= */
+
+/* Paksa rata kiri—menang atas style global */
+.section-title,
+.section-subtitle,
+.section-description {
+  text-align: left !important;
 }
+
+/* Judul: garis kuning kiri + spacing rapat */
+.section-title {
+  margin: 0 0 .5rem 0;
+  font-size: 2.25rem;      /* ~36px, seperti target */
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--dark-color);
+  border-left: 6px solid var(--primary-color);
+  padding-left: 12px;
+}
+
+/* Subjudul: kuning, tebal, tanpa center */
+.section-subtitle {
+  margin: 0 0 .75rem 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* Deskripsi: lebar dibatasi + warna abu lembut */
+.section-description {
+  margin: .25rem 0 1.75rem 0;
+  max-width: 820px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #6b7280; /* abu-abu lembut */
+}
+
+/* Search bar: bentuk seperti target (simple, rounded) */
+.video-search-bar .input-group .form-control {
+  border-radius: 10px 0 0 10px;
+  border: 1px solid #d1d5db;
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+
+.video-search-bar .input-group .form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 .25rem rgba(253, 197, 0, .25);
+}
+
+.video-search-bar .input-group .btn {
+  border-radius: 0 10px 10px 0;
+  border-color: #d1d5db;
+  background: #fff;
+  color: #6b7280;
+}
+.video-search-bar .input-group .btn:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--dark-color);
+}
+
+/* Card video: tetap seperti sebelumnya */
+.video-card-col { display: block; }
 
 .video-card {
-    background: var(--white-color);
-    border-radius: var(--border-radius-md);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
-
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    }
-
-    iframe {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        border: none;
-    }
-
-    .video-placeholder {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        background-color: #e9ecef;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 3rem;
-        color: #adb5bd;
-    }
-
-    .video-card-content {
-        padding: 20px;
-
-        h6 {
-            color: var(--dark-color);
-            margin-top: 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        p {
-            color: #555;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-    }
+  background: var(--white-color);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform .3s ease, box-shadow .3s ease;
+  height: 100%;
 }
-
-.video-search-bar {
-    .form-control:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 0.25rem rgba(253, 197, 0, 0.25);
-    }
-
-    .btn {
-        border-color: #ced4da;
-
-        &:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            color: var(--dark-color);
-        }
-    }
+.video-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
 }
-
-.section-description {
-    color: #555;
-    margin-top: 10px;
-    margin-bottom: 30px;
+.video-card iframe,
+.video-card .video-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+}
+.video-card .video-placeholder {
+  background: #e9ecef;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3rem; color: #adb5bd;
+}
+.video-card .video-card-content {
+  padding: 20px;
+}
+.video-card .video-card-content h6 {
+  margin: 0 0 10px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--dark-color);
+}
+.video-card .video-card-content p {
+  color: #555; font-size: .9rem; line-height: 1.6;
 }

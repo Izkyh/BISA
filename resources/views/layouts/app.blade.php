@@ -17,7 +17,7 @@
 
     @stack('styles')
 </head>
-<body>
+<body class="{{ request()->routeIs('home') ? 'home' : '' }}">
     {{-- Navbar Component --}}
     <x-navbar />
 

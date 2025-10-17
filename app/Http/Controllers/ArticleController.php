@@ -8,18 +8,22 @@ use App\Models\Event;
 class ArticleController extends Controller
 {
     public function index()
-    {
-        $articles = Article::orderBy('created_at', 'desc')->paginate(10);
+{
+    $articles = Article::orderBy('created_at', 'desc')
+        ->paginate(4)
+        ->withQueryString()
+        ->onEachSide(1);
 
-        // Data untuk sidebar
-        $popularArticles = Article::orderBy('created_at', 'desc')->take(3)->get();
-        $upcomingEvents = Event::where('event_date', '>=', now())
-            ->orderBy('event_date', 'asc')
-            ->take(3)
-            ->get();
+    $popularArticles = Article::orderBy('created_at', 'desc')->take(3)->get();
 
-        return view('articles.index', compact('articles', 'popularArticles', 'upcomingEvents'));
-    }
+    $upcomingEvents = Event::where('event_date', '>=', now())
+        ->orderBy('event_date', 'asc')
+        ->take(3)
+        ->get();
+
+    return view('articles.index', compact('articles', 'popularArticles', 'upcomingEvents'));
+}
+
 
     public function show($slug)
     {

@@ -1,32 +1,48 @@
 .sidebar {
-    background: var(--white-color);
-    padding: 25px;
-    border-radius: var(--border-radius-md);
-    box-shadow: var(--shadow-sm);
-    border-top: 4px solid var(--primary-color);
+    .sidebar-box {
+        background: var(--white-color);
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
     h6 {
         font-size: 18px;
         font-weight: 600;
         margin-bottom: 20px;
+        padding: 15px 20px;
         position: relative;
         color: var(--dark-color);
+        background-color: var(--primary-color);
+        border-radius: 10px 10px 0 0;
+        margin: 0;
     }
 
     .sidebar-search {
-        .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem rgba(253, 197, 0, 0.25);
+        padding: 20px;
+
+        .form-control {
+            border-radius: 8px 0 0 8px;
+            border: 1px solid #e0e0e0;
+
+            &:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 0.25rem rgba(253, 197, 0, 0.25);
+            }
         }
 
         .btn {
-            border-color: #ced4da;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 8px 8px 0;
 
             &:hover {
                 background-color: var(--primary-color);
                 border-color: var(--primary-color);
                 color: var(--dark-color);
             }
+        }
+
+        .input-group {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
     }
 
@@ -35,13 +51,20 @@
         flex-direction: column;
         gap: 15px;
         margin-bottom: 25px;
-        padding-left: 0;
+        padding: 20px;
         list-style: none;
     }
 
     .sidebar-item {
         display: flex;
         align-items: flex-start;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+
+        &:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
 
         .sidebar-number {
             width: 28px;
@@ -51,7 +74,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
+            font-weight: 600;
             border-radius: 4px;
             margin-right: 12px;
             font-size: 14px;
@@ -62,11 +85,19 @@
         small {
             color: #666;
             font-size: 0.8rem;
+            display: block;
+            margin-top: 4px;
         }
 
         strong {
             display: block;
             line-height: 1.4;
+            font-size: 14px;
+            color: var(--dark-color);
+
+            &:hover {
+                color: var(--primary-color);
+            }
         }
     }
 
@@ -81,6 +112,7 @@
         text-decoration: none;
         transition: all 0.3s;
         font-weight: 600;
+        margin: 0 20px 20px;
 
         &:hover {
             background: var(--primary-color);
