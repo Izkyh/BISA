@@ -1,0 +1,16 @@
+// Color Variables
+:root {
+    --primary-color: #FFD23F;
+    --secondary-color: #EE4266;
+    --dark-color: #1A1A1A;
+    --white-color: #FFFFFF;
+    --text-color: #333333;
+    --gray-light: #F8F9FA;
+    --gray-medium: #6C757D;
+}
+
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;

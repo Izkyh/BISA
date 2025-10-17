@@ -1,0 +1,96 @@
+.sidebar {
+    background: var(--white-color);
+    padding: 25px;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    border-top: 4px solid var(--primary-color);
+
+    h6 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        position: relative;
+        color: var(--dark-color);
+    }
+
+    .sidebar-search {
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(253, 197, 0, 0.25);
+        }
+
+        .btn {
+            border-color: #ced4da;
+
+            &:hover {
+                background-color: var(--primary-color);
+                border-color: var(--primary-color);
+                color: var(--dark-color);
+            }
+        }
+    }
+
+    .sidebar-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 25px;
+        padding-left: 0;
+        list-style: none;
+    }
+
+    .sidebar-item {
+        display: flex;
+        align-items: flex-start;
+
+        .sidebar-number {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-color);
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            border-radius: 4px;
+            margin-right: 12px;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        small {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        strong {
+            display: block;
+            line-height: 1.4;
+        }
+    }
+
+    .view-all-btn {
+        display: block;
+        text-align: center;
+        padding: 10px 15px;
+        background: transparent;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        border-radius: 50px;
+        text-decoration: none;
+        transition: all 0.3s;
+        font-weight: 600;
+
+        &:hover {
+            background: var(--primary-color);
+            color: var(--dark-color);
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        margin-top: 40px;
+    }
+}

@@ -1,0 +1,92 @@
+// Import Bootstrap
+@import "bootstrap/scss/bootstrap";
+
+// === VARIABLES ===
+@import 'variables';
+
+// === COMPONENTS ===
+@import 'components/navbar';
+@import 'components/sidebar';
+@import 'components/footer';
+@import 'components/article-card';
+@import 'components/article-detail';
+@import 'components/video-card';
+@import 'components/event-card';
+@import 'components/pagination';
+
+// === MAINPAGE ===
+@import 'mainpage/hero';
+@import 'mainpage/about';
+@import 'mainpage/video-section';
+@import 'mainpage/kegiatan';
+@import 'mainpage/artikel';
+
+// === GLOBAL STYLES ===
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--white-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
+
+.section-padding {
+    padding: 80px 0;
+}
+
+.section-title {
+    font-weight: 700;
+    font-size: 2.25rem;
+    margin-bottom: 15px;
+    color: var(--dark-color);
+
+    span {
+        color: var(--primary-color);
+    }
+}
+
+.section-subtitle {
+    font-size: 1rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto 50px auto;
+}
+
+.main-content {
+    padding: 40px 20px;
+    padding-top: 85px;
+}
+
+// === BUTTONS ===
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--dark-color);
+    font-weight: 600;
+    padding: 12px 30px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: #eab100;
+        border-color: #eab100;
+        transform: translateY(-3px);
+    }
+}
+
+// === RESPONSIVE ===
+@media (max-width: 991.98px) {
+    .section-title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .main-content {
+        padding-top: 75px;
+    }
+}
