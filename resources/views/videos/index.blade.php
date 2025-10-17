@@ -9,6 +9,16 @@
         <p class="section-description">Pelajari bahasa isyarat dasar untuk berkomunikasi dengan teman tuli dan tingkatkan inklusivitas dalam masyarakat melalui koleksi video pembelajaran kami.</p>
     </div>
 
+    {{-- Video Search Bar --}}
+    <div class="video-search-bar mb-4">
+        <div class="input-group">
+            <input type="text" id="videoSearchInput" class="form-control" placeholder="Cari video...">
+            <button class="btn btn-outline-secondary" type="button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+
     <div id="video-list" class="row g-4">
         @forelse($videos as $video)
             <div class="col-md-6 video-card-col">
