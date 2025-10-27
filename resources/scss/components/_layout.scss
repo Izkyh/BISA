@@ -86,17 +86,20 @@ html, body {
 
 // Section Titles
 .section-title {
-    font-size: 2rem;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin-bottom: 0.5rem;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a1a1a;
 
-    &:after {
-        content: '';
-        display: block;
-        width: 50px;
-        height: 4px;
-        background-color: var(--primary-color);
-        margin-top: 0.5rem;
-    }
+  /* pusatkan judul */
+  text-align: center;
+  display: inline-block;      // supaya lebarnya selebar teks
+  margin: 0 auto 0.5rem;      // center elemennya
+
 }
+
+/* opsional: warna highlight pada <span> */
+.section-title span { color: var(--primary-color); 
+
+}
+
+
