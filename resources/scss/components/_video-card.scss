@@ -9,15 +9,7 @@
   text-align: left !important;
 }
 
-/* Judul: garis kuning kiri + spacing rapat */
-.section-title {
-  margin: 0 0 .5rem 0;
-  font-size: 2.25rem;      /* ~36px, seperti target */
-  font-weight: 700;
-  color: var(--dark-color);
-  border-left: 6px solid var(--primary-color);
-  padding-left: 12px;
-}
+
 
 /* Subjudul: kuning, tebal, tanpa center */
 .section-subtitle {
