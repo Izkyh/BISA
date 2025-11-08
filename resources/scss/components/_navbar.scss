@@ -1,4 +1,7 @@
-// navbar.scss - Fixed version
+// ============================================
+// NAVBAR - Fixed Component
+// ============================================
+
 .navbar {
     padding: 1rem 0;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -154,23 +157,8 @@
     }
 }
 
-// CRITICAL: Add spacing for fixed navbar
-body {
-    padding-top: 76px; // Sesuaikan dengan tinggi navbar
-}
-
-// Khusus untuk landing page
-body.home {
-    padding-top: 0;
-}
-
-// Spacing saat scroll
-body.scrolled {
-    padding-top: 66px;
-}
-
 // Responsive
-@media (max-width: 991.98px) {
+@media (max-width: $breakpoint-lg) {
     .navbar {
         background-color: rgba(26, 26, 26, 0.95);
 
@@ -192,12 +180,5 @@ body.scrolled {
             margin-left: 1rem;
             margin-top: 0.5rem;
         }
-    }
-
-    // Adjust spacing for mobile
-    main {
-        margin-top: 0;
-        padding-top: 85px;
-        background-color: transparent;
     }
 }

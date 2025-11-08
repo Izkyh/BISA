@@ -1,3 +1,7 @@
+// ============================================
+// HERO SECTION - Homepage
+// ============================================
+
 .hero {
     height: 100vh;
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)),
@@ -8,36 +12,90 @@
     justify-content: center;
     text-align: center;
     color: var(--white-color);
+    position: relative;
 
     .hero-text {
+        max-width: 900px;
+        padding: 0 20px;
+        animation: fadeInUp 1s ease;
+
         h1 {
             font-size: 3.5rem;
             font-weight: 700;
             line-height: 1.2;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         p {
             font-size: 1.1rem;
             max-width: 700px;
             margin: 20px auto 30px auto;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn {
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
     }
 }
 
-@media (max-width: 991.98px) {
-    .hero .hero-text h1 {
-        font-size: 2.5rem;
+// Animation
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-@media (max-width: 768px) {
-    .hero .hero-text {
-        h1 {
-            font-size: 2rem;
-        }
+// Responsive
+@media (max-width: $breakpoint-lg) {
+    .hero {
+        .hero-text {
+            h1 {
+                font-size: 2.5rem;
+            }
 
-        p {
-            font-size: 1rem;
+            p {
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-md) {
+    .hero {
+        height: 80vh;
+
+        .hero-text {
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 0.95rem;
+                margin: 15px auto 25px;
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-sm) {
+    .hero {
+        .hero-text {
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
         }
     }
 }

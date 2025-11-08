@@ -1,4 +1,7 @@
-// _article_card.scss - Fixed version
+// ============================================
+// ARTICLE CARD COMPONENT
+// ============================================
+
 .artikel-card {
     display: flex;
     align-items: flex-start;
@@ -9,7 +12,7 @@
     padding: 25px;
     margin-bottom: 30px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-left: 5px solid #FDC500;
+    border-left: 5px solid var(--primary-color);
     position: relative;
 
     &:hover {
@@ -26,12 +29,14 @@
         flex-shrink: 0;
     }
 
-    .artikel-content {
+    .artikel-content,
+    .card-body {
         flex: 1;
         display: flex;
         flex-direction: column;
 
-        h5 {
+        h5,
+        .card-title {
             font-size: 20px;
             font-weight: 600;
             color: #2d3748;
@@ -39,7 +44,19 @@
             line-height: 1.4;
         }
 
-        small {
+        .card-category {
+            display: inline-block;
+            background-color: #fde8a0;
+            color: #9c6f00;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        small,
+        .card-meta {
             color: #718096;
             display: flex;
             align-items: center;
@@ -48,11 +65,12 @@
             font-size: 14px;
 
             i {
-                color: #FDC500;
+                color: var(--primary-color);
             }
         }
 
-        p {
+        p,
+        .card-text {
             color: #4a5568;
             font-size: 15px;
             line-height: 1.6;
@@ -60,7 +78,7 @@
         }
 
         a {
-            color: #FDC500;
+            color: var(--primary-color);
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -85,7 +103,7 @@
 }
 
 // Responsive design
-@media (max-width: 992px) {
+@media (max-width: $breakpoint-lg) {
     .artikel-card {
         flex-direction: column;
         padding: 20px;
@@ -99,7 +117,7 @@
     }
 }
 
-@media (max-width: 576px) {
+@media (max-width: $breakpoint-sm) {
     .artikel-card {
         padding: 15px;
 
@@ -107,12 +125,15 @@
             height: 180px;
         }
 
-        .artikel-content {
-            h5 {
+        .artikel-content,
+        .card-body {
+            h5,
+            .card-title {
                 font-size: 18px;
             }
 
-            p {
+            p,
+            .card-text {
                 font-size: 14px;
             }
         }

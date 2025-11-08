@@ -1,36 +1,18 @@
-/* Header Galeri Video */
+// ============================================
+// VIDEO PAGE & COMPONENTS
+// ============================================
+
+// Video Page Header
 .video-header {
     margin-bottom: 2rem;
 
-    .section-title {
-        margin: 0 0 .5rem 0;
-        font-size: 2.25rem;
-        font-weight: 700;
-        color: var(--dark-color);
-        border-left: 6px solid var(--primary-color);
-        padding-left: 12px;
-        text-align: left !important;
-    }
-
-    .section-subtitle {
-        margin: 0 0 .75rem 0;
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--primary-color);
-        text-align: left !important;
-    }
-
-    .section-description {
-        margin: .25rem 0 1.75rem 0;
-        max-width: 820px;
-        font-size: 1rem;
-        line-height: 1.7;
-        color: #6b7280;
-        text-align: left !important;
-    }
+    // Inherit styles dari _layout.scss
+    // .section-title
+    // .section-subtitle
+    // .section-description
 }
 
-/* Search bar */
+// Video Search Bar
 .video-search-bar {
     margin-bottom: 2rem;
 
@@ -65,7 +47,7 @@
     }
 }
 
-/* Card video */
+// Video Card
 .video-card-col {
     display: block;
 }
@@ -80,7 +62,7 @@
 
     &:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0,0,0,.08);
+        box-shadow: var(--shadow-lg);
     }
 
     iframe,
@@ -117,7 +99,7 @@
     }
 }
 
-/* Layout spacing */
+// Video List Grid
 #video-list {
     margin: 0 -1rem;
 
@@ -126,14 +108,23 @@
     }
 }
 
-/* Grid spacing */
+// Grid spacing override
 .g-4 {
     --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 1.5rem;
 }
 
-/* Main wrapper */
-.main-content {
-    padding-top: 120px;
-    background-color: #f5f5f5;
+// Responsive
+@media (max-width: $breakpoint-md) {
+    .video-search-bar .input-group {
+        max-width: 100%;
+    }
+
+    .video-card .video-card-content {
+        padding: 15px;
+
+        h6 {
+            font-size: 1rem;
+        }
+    }
 }

@@ -1,3 +1,7 @@
+// ============================================
+// VARIABLES - Single Source of Truth
+// ============================================
+
 // Color Variables
 :root {
     --primary-color: #FFD23F;
@@ -5,8 +9,22 @@
     --dark-color: #1A1A1A;
     --white-color: #FFFFFF;
     --text-color: #333333;
-    --gray-light: #F8F9FA;
+    --light-bg-color: #F8F9FA;
     --gray-medium: #6C757D;
+
+    // Spacing untuk navbar
+    --navbar-height: 76px;
+    --navbar-height-scrolled: 66px;
+
+    // Border radius
+    --border-radius-sm: 4px;
+    --border-radius-md: 10px;
+    --border-radius-lg: 12px;
+
+    // Shadows
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
 // Breakpoints
@@ -14,3 +32,8 @@ $breakpoint-sm: 576px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
+
+// Spacing Constants
+$section-padding: 80px;
+$main-content-padding-top: 120px; // Unified spacing dari navbar
+$container-max-width: 1140px;

@@ -1,19 +1,22 @@
 <?php
-// app/Http/Controllers/HomeController.php
 
 namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Event;
-use App\Models\Video;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $latestArticles = Article::orderBy('created_at', 'desc')->take(3)->get();
-        $latestEvents = Event::where('event_date', '>=', now())
-            ->orderBy('event_date', 'asc')
+        // Ambil 3 artikel terbaru (tanpa filter)
+        $latestArticles = Article::orderBy('created_at', 'desc')
+            ->take(3)
+            ->get();
+
+       
+        $latestEvents = Event::orderBy('event_date', 'desc')
             ->take(3)
             ->get();
 

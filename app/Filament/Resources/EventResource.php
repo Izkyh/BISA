@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\EventResource\Pages;
-use App\Filament\Resources\EventResource\RelationManagers;
 use App\Models\Event;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EventResource extends Resource
 {
@@ -26,20 +23,33 @@ class EventResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('category')
+
+                // ✅ Category now uses dropdown (Select) sesuai ENUM
+                Forms\Components\Select::make('category')
+                    ->options([
+                        'umum' => 'Umum',
+                        'kelas' => 'Kelas',
+                        'seminar' => 'Seminar',
+                    ])
                     ->required(),
+
                 Forms\Components\DateTimePicker::make('start_time')
                     ->required(),
+
                 Forms\Components\DateTimePicker::make('end_time')
                     ->required(),
+
                 Forms\Components\DatePicker::make('event_date')
                     ->required(),
+
                 Forms\Components\TextInput::make('location')
                     ->required()
                     ->maxLength(255),
+
                 Forms\Components\TextInput::make('link')
                     ->maxLength(255)
                     ->default(null),
+
                 Forms\Components\FileUpload::make('image_path')
                     ->image(),
             ]);
@@ -51,33 +61,40 @@ class EventResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('category'),
+
                 Tables\Columns\TextColumn::make('start_time')
                     ->dateTime()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('end_time')
                     ->dateTime()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('event_date')
                     ->date()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('location')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('link')
                     ->searchable(),
+
                 Tables\Columns\ImageColumn::make('image_path'),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -90,9 +107,7 @@ class EventResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
@@ -100,7 +115,7 @@ class EventResource extends Resource
         return [
             'index' => Pages\ListEvents::route('/'),
             'create' => Pages\CreateEvent::route('/create'),
-            'edit' => Pages\EditEvent::route('/{record}/edit'),
+            'edit'  => Pages\EditEvent::route('/{record}/edit'),
         ];
     }
 }

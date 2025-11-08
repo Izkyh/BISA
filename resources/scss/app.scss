@@ -1,21 +1,14 @@
+// ============================================
+// MAIN APP SCSS - Clean Import Structure
+// ============================================
+
 // Import Bootstrap
 @import "bootstrap/scss/bootstrap";
 
-// === VARIABLES ===
+// === VARIABLES (First!) ===
 @import 'variables';
 
-// Global styles
-body {
-    background-color: #f5f5f5;
-    min-height: 100vh;
-}
-
-.main-content {
-    background-color: transparent;
-    padding-top: 120px; // Menambah jarak dari navbar
-}
-
-// === LAYOUT ===
+// === BASE LAYOUT ===
 @import 'components/layout';
 
 // === COMPONENTS ===
@@ -25,51 +18,26 @@ body {
 @import 'components/article-card';
 @import 'components/article-detail';
 @import 'components/video';
-@import 'components/video-card';
 @import 'components/event-card';
 @import 'components/pagination';
 
-// === MAINPAGE ===
+// === MAINPAGE/SECTIONS ===
 @import 'mainpage/hero';
 @import 'mainpage/about';
 @import 'mainpage/video-section';
 @import 'mainpage/kegiatan';
 @import 'mainpage/artikel';
 
-// === GLOBAL STYLES ===
+// === PAGES ===
+@import 'pages/profile';
+
+// ============================================
+// GLOBAL STYLES (Minimal, non-duplicate)
+// ============================================
+
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: var(--white-color);
     color: var(--text-color);
-    margin: 0;
-    padding: 0;
-}
-
-.section-padding {
-    padding: 80px 0;
-}
-
-.section-title {
-    font-weight: 700;
-    font-size: 2.25rem;
-    margin-bottom: 15px;
-    color: var(--dark-color);
-
-    span {
-        color: var(--primary-color);
-    }
-}
-
-.section-subtitle {
-    font-size: 1rem;
-    color: #666;
-    max-width: 600px;
-    margin: 0 auto 50px auto;
-}
-
-.main-content {
-    padding: 40px 20px;
-    padding-top: 85px;
 }
 
 // === BUTTONS ===
@@ -86,22 +54,76 @@ body {
         background-color: #eab100;
         border-color: #eab100;
         transform: translateY(-3px);
+        color: var(--dark-color);
     }
 }
 
-// === RESPONSIVE ===
-@media (max-width: 991.98px) {
-    .section-title {
-        font-size: 1.8rem;
+.btn-outline-primary {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    font-weight: 600;
+
+    &:hover {
+        background-color: var(--primary-color);
+        color: var(--dark-color);
+        border-color: var(--primary-color);
     }
 }
 
-@media (max-width: 768px) {
-    .section-title {
-        font-size: 1.8rem;
-    }
+// === SEARCH BAR (Global Style) ===
+.search-bar {
+    margin-bottom: 2rem;
 
-    .main-content {
-        padding-top: 75px;
+    .input-group {
+        max-width: 500px;
+
+        .input-group-text {
+            background-color: var(--white-color);
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .form-control {
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+
+            &:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 0.25rem rgba(253, 197, 0, 0.25);
+            }
+        }
+    }
+}
+
+// === ALERTS ===
+.alert {
+    border-radius: var(--border-radius-md);
+
+    &.alert-info {
+        background-color: #e7f3ff;
+        border-color: #b3d9ff;
+        color: #004085;
+    }
+}
+
+// === EMPTY STATES ===
+.text-muted {
+    color: var(--gray-medium) !important;
+}
+
+// ============================================
+// RESPONSIVE GLOBAL ADJUSTMENTS
+// ============================================
+
+@media (max-width: $breakpoint-lg) {
+    .btn-primary {
+        padding: 10px 25px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: $breakpoint-md) {
+    .search-bar .input-group {
+        max-width: 100%;
     }
 }

@@ -1,21 +1,34 @@
+// ============================================
+// SIDEBAR COMPONENT
+// ============================================
+
 .sidebar {
+    .sidebar-section {
+        margin-bottom: 2rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
     .sidebar-box {
         background: var(--white-color);
         border-radius: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
     }
 
     h6 {
         font-size: 18px;
         font-weight: 600;
-        margin-bottom: 20px;
         padding: 15px 20px;
-        position: relative;
-        color: var(--dark-color);
-        border-radius: 10px 10px 0 0;
         margin: 0;
+        color: var(--dark-color);
+        border-bottom: 2px solid var(--primary-color);
+        background-color: #fafafa;
     }
 
+    // Sidebar Search
     .sidebar-search {
         padding: 20px;
 
@@ -31,7 +44,10 @@
 
         .btn {
             border: 1px solid #e0e0e0;
+            border-left: none;
             border-radius: 0 8px 8px 0;
+            background: #fff;
+            color: #6b7280;
 
             &:hover {
                 background-color: var(--primary-color);
@@ -45,24 +61,29 @@
         }
     }
 
+    // Sidebar List
     .sidebar-list {
         display: flex;
         flex-direction: column;
-        gap: 15px;
-        margin-bottom: 25px;
-        padding: 20px;
+        gap: 0;
+        padding: 0 20px 20px;
+        margin: 0;
         list-style: none;
     }
 
     .sidebar-item {
         display: flex;
         align-items: flex-start;
-        padding-bottom: 15px;
+        padding: 15px 0;
         border-bottom: 1px solid #eee;
 
         &:last-child {
             border-bottom: none;
             padding-bottom: 0;
+        }
+
+        &:first-child {
+            padding-top: 0;
         }
 
         .sidebar-number {
@@ -81,11 +102,13 @@
             margin-top: 2px;
         }
 
-        small {
-            color: #666;
-            font-size: 0.8rem;
-            display: block;
-            margin-top: 4px;
+        > div {
+            flex: 1;
+        }
+
+        a {
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
 
         strong {
@@ -98,8 +121,21 @@
                 color: var(--primary-color);
             }
         }
+
+        small {
+            color: #666;
+            font-size: 0.8rem;
+            display: block;
+            margin-top: 4px;
+
+            i {
+                color: var(--primary-color);
+                margin-right: 4px;
+            }
+        }
     }
 
+    // View All Button
     .view-all-btn {
         display: block;
         text-align: center;
@@ -120,8 +156,23 @@
     }
 }
 
-@media (max-width: 768px) {
+// Responsive
+@media (max-width: $breakpoint-md) {
     .sidebar {
         margin-top: 40px;
+
+        h6 {
+            font-size: 16px;
+            padding: 12px 15px;
+        }
+
+        .sidebar-search,
+        .sidebar-list {
+            padding: 15px;
+        }
+
+        .view-all-btn {
+            margin: 0 15px 15px;
+        }
     }
 }
