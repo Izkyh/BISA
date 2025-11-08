@@ -40,12 +40,13 @@
     }
 
     .navbar-brand img {
-        height: 45px;
+        height: 50px;
         transition: height 0.4s ease;
+        margin-right: 10px;
     }
 
     &.scrolled .navbar-brand img {
-        height: 40px;
+        height: 45px;
     }
 
     .navbar-toggler {
@@ -63,7 +64,9 @@
     .nav-link {
         color: var(--white-color) !important;
         font-weight: 500;
-        margin: 0 10px;
+        font-size: 1.05rem;
+        margin: 0 15px;
+        padding: 8px 12px;
         transition: color 0.3s ease;
         position: relative;
 
@@ -171,14 +174,47 @@
 
         .nav-link {
             padding: 0.75rem 1rem;
+            margin: 0;
+            font-size: 1rem;
         }
 
-        .dropdown-menu {
-            background-color: rgba(255, 255, 255, 0.95);
-            border: none;
-            box-shadow: none;
-            margin-left: 1rem;
-            margin-top: 0.5rem;
+        .dropdown {
+            .dropdown-menu {
+                background-color: rgba(40, 40, 40, 0.95);
+                border: none;
+                box-shadow: none;
+                margin-left: 0;
+                margin-top: 0.5rem;
+                position: static !important;
+                transform: none !important;
+
+                // Override animasi untuk mobile
+                &.show {
+                    display: block !important;
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+
+            .dropdown-item {
+                color: rgba(255, 255, 255, 0.9);
+                padding: 0.75rem 1.5rem;
+
+                &::before {
+                    background-color: var(--primary-color);
+                    opacity: 0.3;
+                }
+
+                &:hover,
+                &:focus {
+                    color: var(--primary-color);
+                    background-color: transparent;
+                }
+            }
+        }
+
+        .navbar-brand img {
+            height: 45px;
         }
     }
 }

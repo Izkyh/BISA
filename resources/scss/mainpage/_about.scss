@@ -1,18 +1,42 @@
+// ============================================
+// ABOUT SECTION - Homepage
+// ============================================
+
 .about-section {
     background-color: var(--light-bg-color);
 
-    .tab-buttons .nav-pills .nav-link {
-        background-color: #e9ecef;
-        color: var(--text-color);
-        font-weight: 600;
-        border-radius: 50px;
-        margin: 0 5px;
-        padding: 10px 25px;
-        transition: all 0.3s ease;
+    // Center section headers
+    .text-center {
+        text-align: center !important;
 
-        &.active {
-            background-color: var(--primary-color);
-            color: var(--dark-color);
+        .section-title,
+        .section-subtitle {
+            text-align: center !important;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .tab-buttons {
+        .nav-pills {
+            .nav-link {
+                background-color: #e9ecef;
+                color: var(--text-color);
+                font-weight: 600;
+                border-radius: 50px;
+                margin: 0 5px;
+                padding: 10px 25px;
+                transition: all 0.3s ease;
+
+                &.active {
+                    background-color: var(--primary-color);
+                    color: var(--dark-color);
+                }
+
+                &:hover:not(.active) {
+                    background-color: #dee2e6;
+                }
+            }
         }
     }
 
@@ -24,6 +48,7 @@
         img {
             max-width: 250px;
             border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
         }
     }
 
@@ -32,11 +57,13 @@
             font-weight: 600;
             font-size: 1.5rem;
             margin-bottom: 20px;
+            color: var(--dark-color);
         }
 
         p {
             text-align: justify;
             line-height: 1.8;
+            color: #555;
         }
     }
 
@@ -47,22 +74,229 @@
         border-left: 5px solid var(--primary-color);
         box-shadow: var(--shadow-sm);
         height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
 
         h4 {
             font-weight: 600;
             color: var(--dark-color);
+            margin-bottom: 15px;
         }
 
         i {
             color: var(--primary-color);
             margin-right: 10px;
+            font-size: 1.25rem;
+        }
+
+        p {
+            line-height: 1.7;
+            color: #555;
         }
     }
 }
 
-@media (max-width: 768px) {
-    .about-section .about-image {
-        text-align: center;
-        margin-bottom: 30px;
+@media (max-width: $breakpoint-md) {
+    .about-section {
+        .about-image {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .tab-buttons .nav-pills .nav-link {
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            margin: 0 3px;
+        }
+    }
+}
+
+// ============================================
+// VIDEO SECTION - Homepage
+// ============================================
+
+.video-section {
+    background: linear-gradient(to right, #fff9e7, #fff2cc);
+
+    // Center section headers
+    .text-center {
+        text-align: center !important;
+
+        .section-title,
+        .section-subtitle {
+            text-align: center !important;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .video-wrapper {
+        position: relative;
+        max-width: 900px;
+        margin: 0 auto;
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+        iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: none;
+        }
+    }
+}
+
+// ============================================
+// KEGIATAN SECTION - Homepage
+// ============================================
+
+#kegiatan {
+    // Center section headers
+    .text-center {
+        text-align: center !important;
+
+        .section-title,
+        .section-subtitle {
+            text-align: center !important;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}
+
+.kegiatan-card {
+    background: var(--white-color);
+    border: 1px solid #f0f0f0;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--primary-color);
+    }
+
+    .kegiatan-image-placeholder {
+        background-color: #e9ecef;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .d-flex {
+            height: 100%;
+        }
+    }
+
+    .badge-custom {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border-radius: 50px;
+        color: var(--white-color);
+        flex-shrink: 0;
+        margin-left: 10px;
+
+        &.badge-umum {
+            background-color: #0d6efd;
+        }
+
+        &.badge-seminar {
+            background-color: #198754;
+        }
+
+        &.badge-kelas {
+            background-color: #fd7e14;
+        }
+    }
+
+    .kegiatan-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        font-size: 0.85rem;
+        color: #555;
+        margin: 15px 0;
+
+        span {
+            display: flex;
+            align-items: center;
+
+            i {
+                color: var(--primary-color);
+                margin-right: 5px;
+            }
+        }
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 10px;
+    }
+
+    .card-body {
+        padding: 0;
+    }
+
+    .card-meta {
+        font-size: 0.85rem;
+        color: #666;
+        margin: 0;
+
+        i {
+            color: var(--primary-color);
+            margin-right: 5px;
+        }
+    }
+}
+
+// ============================================
+// ARTIKEL SECTION - Homepage
+// ============================================
+
+#articles,
+.artikel-section {
+    background-color: var(--light-bg-color);
+
+    // Center section headers
+    .text-center {
+        text-align: center !important;
+
+        .section-title,
+        .section-subtitle {
+            text-align: center !important;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}
+
+// Responsive for all sections
+@media (max-width: $breakpoint-md) {
+    .kegiatan-card {
+        .card-title {
+            font-size: 1rem;
+        }
+
+        .kegiatan-info {
+            gap: 10px;
+            font-size: 0.8rem;
+        }
     }
 }
