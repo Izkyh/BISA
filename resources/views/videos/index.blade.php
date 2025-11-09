@@ -58,9 +58,11 @@
     </div>
 
     {{-- Pagination --}}
-    <nav>
-        {{ $videos->links('pagination::bootstrap-5') }}
-    </nav>
+   @if($videos->hasPages())
+        <nav class="mt-4">
+            {{ $videos->links('vendor.pagination.video') }}
+        </nav>
+    @endif
 @endsection
 
 @push('scripts')

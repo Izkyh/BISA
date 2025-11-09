@@ -66,8 +66,8 @@
 
     {{-- Pagination (if needed) --}}
     @if($events->hasPages())
-        <nav>
-            {{ $events->links('pagination::bootstrap-5') }}
+        <nav class="mt-4">
+            {{ $events->links('vendor.pagination.events') }}
         </nav>
     @endif
 @endsection
