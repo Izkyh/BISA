@@ -5,6 +5,16 @@
 @section('content')
     <h1 class="section-title">Kegiatan Komunitas</h1>
 
+    {{-- Video Search Bar --}}
+    <div class="video-search-bar mb-4">
+        <div class="input-group">
+            <input type="text" id="videoSearchInput" class="form-control" placeholder="Cari video...">
+            <button class="btn btn-outline-secondary" type="button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+
     <div class="d-flex flex-column gap-4">
         @forelse($events as $event)
             <div class="event-card">
@@ -61,3 +71,25 @@
         </nav>
     @endif
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const videoSearchInput = document.getElementById('videoSearchInput');
+        const videoCards = document.querySelectorAll('.video-card-col');
+
+        if (videoSearchInput) {
+            videoSearchInput.addEventListener('input', function() {
+                const searchTerm = videoSearchInput.value.toLowerCase().trim();
+                videoCards.forEach(function(col) {
+                    const videoTitle = col.querySelector('.video-card-content h6').textContent.toLowerCase();
+                    if (videoTitle.includes(searchTerm)) {
+                        col.style.display = 'block';
+                    } else {
+                        col.style.display = 'none';
+                    }
+                });
+            });
+        }
+    });
+</script>

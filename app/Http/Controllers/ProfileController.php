@@ -1,22 +1,42 @@
 <?php
-
 namespace App\Http\Controllers;
+
+use App\Models\BoardMember;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
     public function kepengurusan()
     {
-        // Nanti bisa tambahkan data dari database jika diperlukan
-        return view('profil.kepengurusan');
+        $boardMembers = BoardMember::active()
+            ->board()
+            ->ordered()
+            ->get();
+
+        return view('profil.kepengurusan', compact('boardMembers'));
     }
 
     public function keanggotaan()
     {
-        return view('profil.keanggotaan');
+        $members = BoardMember::active()
+            ->member()
+            ->ordered()
+            ->paginate(12);
+
+        return view('profil.keanggotaan', compact('members'));
     }
 
     public function struktur()
     {
-        return view('profil.struktur');
+        $founder = BoardMember::active()
+            ->founder()
+            ->first();
+
+        $teamMembers = BoardMember::active()
+            ->board()
+            ->ordered()
+            ->get();
+
+        return view('profil.struktur', compact('founder', 'teamMembers'));
     }
 }

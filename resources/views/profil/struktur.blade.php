@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Struktur Organisasi - TIBA Surabaya')
+
 @section('content')
     <div class="container main-content">
         <div class="row">
@@ -9,64 +10,41 @@
                 <p class="section-subtitle">Kenali tim hebat di balik Komunitas TIBA Surabaya.</p>
 
                 <div class="team-section">
-                    <div class="team-header">
-                        <h4>Tim TIBA Surabaya</h4>
-                        <p>Founder</p>
-                    </div>
+                    @if($founder)
+                        <div class="team-header">
+                            <h4>Tim TIBA Surabaya</h4>
+                            <p>Founder</p>
+                        </div>
 
-                    <div class="founder-card">
-                        <img src="{{ asset('foto/placeholder.jpg') }}" alt="Founder">
-                        <h5>I Gede Made Rony Dwipayana</h5>
-                        <span>Founder & Pembina</span>
-                    </div>
+                        <div class="founder-card">
+                            <img src="{{ $founder->photo_url }}" alt="{{ $founder->name }}">
+                            <h5>{{ $founder->name }}</h5>
+                            <span>{{ $founder->position }}</span>
+                        </div>
 
-                    <hr class="my-5">
+                        <hr class="my-5">
+                    @endif
 
                     <div class="team-header">
                         <p>Anggota Tim</p>
                     </div>
 
-                    <div class="team-grid">
-                        <div class="team-member-card">
-                            <img src="{{ asset('foto/placeholder.jpg') }}" alt="Anggota">
-                            <h6>Pramaswari</h6>
-                            <small>Admin Sosmed</small>
+                    @if($teamMembers->count() > 0)
+                        <div class="team-grid">
+                            @foreach($teamMembers as $member)
+                                <div class="team-member-card">
+                                    <img src="{{ $member->photo_url }}" alt="{{ $member->name }}">
+                                    <h6>{{ $member->name }}</h6>
+                                    <small>{{ $member->position }}</small>
+                                </div>
+                            @endforeach
                         </div>
-                        <div class="team-member-card">
-                            <img src="{{ asset('foto/placeholder.jpg') }}" alt="Anggota">
-                            <h6>Nama Anggota</h6>
-                            <small>Jabatan</small>
+                    @else
+                        <div class="alert alert-info text-center mt-4">
+                            <i class="fas fa-users fa-3x mb-3"></i>
+                            <p class="mb-0">Belum ada data anggota tim.</p>
                         </div>
-                        <div class="team-member-card">
-                            <img src="{{ asset('foto/placeholder.jpg') }}" alt="Anggota">
-                            <h6>Nama Anggota</h6>
-                            <small>Jabatan</small>
-                        </div>
-                        <div class="team-member-card">
-                            <img src="{{ asset('foto/placeholder.jpg') }}" alt="Anggota">
-                            <h6>Nama Anggota</h6>
-                            <small>Jabatan</small>
-                        </div>
-                        <div class="team-member-card">
-                            <img src="{{ asset('foto/placeholder.jpg') }}" alt="Anggota">
-                            <h6>Nama Anggota</h6>
-                            <small>Jabatan</small>
-                        </div>
-                        <div class="team-member-card">
-                            <img src="{{ asset('foto/placeholder.jpg') }}" alt="Anggota">
-                            <h6>Nama Anggota</h6>
-                            <small>Jabatan</small>
-                        </div>
-                    </div>
-
-                    <nav>
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
+                    @endif
                 </div>
             </div>
         </div>

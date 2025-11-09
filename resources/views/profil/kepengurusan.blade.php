@@ -14,40 +14,57 @@
         </div>
 
         <div id="member-list" class="row g-4">
-            {{-- Sample Data - Replace with actual data from database --}}
-            <div class="col-lg-4 col-md-6 member-col">
-                <div class="member-card">
-                    <div class="member-card-header">
-                        <img src="{{ asset('foto/placeholder.jpg') }}" alt="Foto Anggota">
-                        <div class="info">
-                            <h5>Arung Admaja</h5>
-                            <span class="member-role-badge">Ketua Harian</span>
+            @forelse($boardMembers as $member)
+                <div class="col-lg-4 col-md-6 member-col" data-name="{{ strtolower($member->name) }}">
+                    <div class="member-card">
+                        <div class="member-card-header">
+                            <img src="{{ $member->photo_url }}" alt="{{ $member->name }}">
+                            <div class="info">
+                                <h5>{{ $member->name }}</h5>
+                                <span class="member-role-badge">{{ $member->position }}</span>
+                            </div>
+                        </div>
+                        <div class="member-card-body">
+                            <ul class="details-list">
+                                <li>
+                                    <span class="label">Tanggal Lahir</span>
+                                    <span class="value">
+                                        {{ $member->birth_date ? $member->birth_date->format('d M Y') : '-' }}
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="label">Jenis Kelamin</span>
+                                    <span class="value">{{ $member->gender ?? '-' }}</span>
+                                </li>
+                                <li>
+                                    <span class="label">Pekerjaan</span>
+                                    <span class="value">{{ $member->occupation ?? '-' }}</span>
+                                </li>
+                                <li>
+                                    <span class="label">Alamat</span>
+                                    <span class="value">{{ Str::limit($member->address ?? '-', 30) }}</span>
+                                </li>
+                                <li>
+                                    <span class="label">No. HP</span>
+                                    <span class="value">{{ $member->phone ?? '-' }}</span>
+                                </li>
+                                <li>
+                                    <span class="label">Sosmed</span>
+                                    <span class="value">{{ $member->social_media ?? '-' }}</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="member-card-body">
-                        <ul class="details-list">
-                            <li><span class="label">Tanggal Lahir</span> <span class="value">28 Des 2004</span></li>
-                            <li><span class="label">Jenis Kelamin</span> <span class="value">L</span></li>
-                            <li><span class="label">Pekerjaan</span> <span class="value">Mahasiswa</span></li>
-                            <li><span class="label">Alamat</span> <span class="value">Jl. Raya Keputih</span></li>
-                            <li><span class="label">No. HP</span> <span class="value">082176894624</span></li>
-                            <li><span class="label">Sosmed</span> <span class="value">@Arungg245</span></li>
-                        </ul>
+                </div>
+            @empty
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-users fa-3x mb-3"></i>
+                        <p class="mb-0">Belum ada data kepengurusan.</p>
                     </div>
                 </div>
-            </div>
-
-            {{-- Add more member cards as needed --}}
+            @endforelse
         </div>
-
-        <nav>
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
     </div>
 @endsection
 
@@ -60,7 +77,7 @@
         searchInput.addEventListener('input', function() {
             const searchTerm = searchInput.value.toLowerCase().trim();
             memberCols.forEach(function(col) {
-                const memberName = col.querySelector('h5').textContent.toLowerCase();
+                const memberName = col.getAttribute('data-name');
                 if (memberName.includes(searchTerm)) {
                     col.style.display = '';
                 } else {
