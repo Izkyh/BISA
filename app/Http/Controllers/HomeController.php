@@ -15,7 +15,7 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-       
+
         $latestEvents = Event::orderBy('event_date', 'desc')
             ->take(3)
             ->get();
