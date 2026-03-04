@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -10,7 +9,7 @@ class VideoController extends Controller
 {
     public function index()
     {
-        $videos = Video::latest()->paginate(10);
+        $videos = Video::latest()->paginate(12);
         return view('admin.videos.index', compact('videos'));
     }
 
@@ -22,11 +21,12 @@ class VideoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'url' => 'required|url',
+            'title'       => 'required|string|max:255',
+            'youtube_url' => 'required|url', // ✅ fix: url → youtube_url
         ]);
-        Video::create($request->all());
-        return redirect()->route('admin.videos.index')->with('success', 'Video berhasil ditambahkan');
+        Video::create($request->only('title', 'youtube_url'));
+        return redirect()->route('admin.videos.index')
+            ->with('success', 'Video berhasil ditambahkan');
     }
 
     public function edit(Video $video)
@@ -37,16 +37,18 @@ class VideoController extends Controller
     public function update(Request $request, Video $video)
     {
         $request->validate([
-            'title' => 'required',
-            'url' => 'required|url',
+            'title'       => 'required|string|max:255',
+            'youtube_url' => 'required|url', // ✅ fix: url → youtube_url
         ]);
-        $video->update($request->all());
-        return redirect()->route('admin.videos.index')->with('success', 'Video berhasil diupdate');
+        $video->update($request->only('title', 'youtube_url'));
+        return redirect()->route('admin.videos.index')
+            ->with('success', 'Video berhasil diupdate');
     }
 
     public function destroy(Video $video)
     {
         $video->delete();
-        return redirect()->route('admin.videos.index')->with('success', 'Video berhasil dihapus');
+        return redirect()->route('admin.videos.index')
+            ->with('success', 'Video berhasil dihapus');
     }
 }

@@ -1,58 +1,91 @@
 @extends('admin.layouts.app')
+@section('title', 'Video')
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="card card-dark mb-4">
-        <div class="card-body d-flex justify-content-between align-items-center">
-            <h2 class="mb-0">Daftar Video</h2>
-            <a href="{{ route('admin.videos.create') }}" class="btn btn-primary">Tambah Video</a>
-        </div>
+<div class="ph">
+    <div>
+        <h4>Video YouTube</h4>
+        <nav aria-label="breadcrumb"><ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Video</li>
+        </ol></nav>
     </div>
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+    <a href="{{ route('admin.videos.create') }}" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Tambah Video
+    </a>
+</div>
+
+@if(session('success'))
+    <div class="alert alert-success mb-3"><i class="bi bi-check-circle me-2"></i>{{ session('success') }}</div>
+@endif
+
+<div class="card-admin">
+    <table class="tbl">
+        <thead>
+            <tr>
+                <th style="width:44px;">#</th>
+                <th style="width:90px;">Thumbnail</th>
+                <th>Judul</th>
+                <th>YouTube URL</th>
+                <th>Ditambahkan</th>
+                <th class="text-center">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($videos as $video)
+            <tr>
+                <td style="color:var(--muted); font-size:.8rem;">
+                    {{ ($videos->currentPage()-1)*$videos->perPage()+$loop->iteration }}
+                </td>
+                <td>
+                    @if($video->youtube_id)
+                    <img src="{{ $video->thumbnail_url }}"
+                         style="width:78px; height:46px; object-fit:cover; border-radius:6px; border:1px solid var(--border);"
+                         alt="thumb">
+                    @else
+                    <div style="width:78px; height:46px; background:var(--bg-hover); border-radius:6px;
+                                display:flex; align-items:center; justify-content:center; color:var(--muted);">
+                        <i class="bi bi-youtube"></i>
+                    </div>
+                    @endif
+                </td>
+                <td style="font-weight:500;">{{ Str::limit($video->title, 44) }}</td>
+                <td>
+                    {{-- ✅ fix: youtube_url --}}
+                    <a href="{{ $video->youtube_url }}" target="_blank"
+                       style="color:var(--accent); font-size:.8rem; text-decoration:none;">
+                        {{ Str::limit($video->youtube_url, 42) }}
+                        <i class="bi bi-box-arrow-up-right ms-1" style="font-size:.7rem;"></i>
+                    </a>
+                </td>
+                <td style="color:var(--muted); white-space:nowrap; font-size:.82rem;">
+                    {{ $video->created_at->format('d M Y') }}
+                </td>
+                <td class="text-center" style="white-space:nowrap;">
+                    <a href="{{ route('admin.videos.edit', $video) }}"
+                       class="btn btn-sm btn-warning btn-icon me-1">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <form action="{{ route('admin.videos.destroy', $video) }}" method="POST" class="d-inline">
+                        @csrf @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger btn-icon"
+                            onclick="return confirm('Hapus video ini?')">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            @empty
+            <tr><td colspan="6" class="text-center py-5" style="color:var(--muted);">
+                <i class="bi bi-camera-video d-block fs-2 mb-2"></i>Belum ada video
+            </td></tr>
+            @endforelse
+        </tbody>
+    </table>
+    @if($videos->hasPages())
+    <div style="padding:14px 16px; border-top:1px solid var(--border); display:flex; justify-content:center;">
+        {{ $videos->links() }}
+    </div>
     @endif
-    <div class="card card-dark">
-        <div class="card-body p-0">
-            <table class="table table-dark table-hover mb-0">
-                <thead>
-                    <tr>
-                        <th>Judul</th>
-                        <th>URL</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($videos as $video)
-                    <tr>
-                        <td>{{ $video->title }}</td>
-                        <td><a href="{{ $video->url }}" target="_blank">{{ $video->url }}</a></td>
-                        <td>
-                            <a href="{{ route('admin.videos.edit', $video) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('admin.videos.destroy', $video) }}" method="POST" style="display:inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus video?')">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row mt-4">
-        <div class="col d-flex justify-content-between">
-            @if($videos->onFirstPage())
-                <span></span>
-            @else
-                <a href="{{ $videos->previousPageUrl() }}" class="btn btn-secondary btn-lg px-4"><i class="bi bi-arrow-left"></i> Previous</a>
-            @endif
-            @if($videos->hasMorePages())
-                <a href="{{ $videos->nextPageUrl() }}" class="btn btn-secondary btn-lg px-4">Next <i class="bi bi-arrow-right"></i></a>
-            @else
-                <span></span>
-            @endif
-        </div>
-    </div>
 </div>
 @endsection

@@ -1,11 +1,59 @@
-<div class="sidebar d-flex flex-column p-3">
-    <div class="brand"><i class="bi bi-shield-lock"></i> TIBA Admin</div>
-    <ul class="nav nav-pills flex-column mb-auto">
-        <li><a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"><i class="bi bi-house-door"></i> <span>Dashboard</span></a></li>
-        <li><a href="{{ route('admin.articles.index') }}" class="nav-link {{ request()->routeIs('admin.articles.*') ? 'active' : '' }}"><i class="bi bi-file-earmark-text"></i> <span>Artikel</span></a></li>
-        <li><a href="{{ route('admin.events.index') }}" class="nav-link {{ request()->routeIs('admin.events.*') ? 'active' : '' }}"><i class="bi bi-calendar-event"></i> <span>Event</span></a></li>
-        <li><a href="{{ route('admin.videos.index') }}" class="nav-link {{ request()->routeIs('admin.videos.*') ? 'active' : '' }}"><i class="bi bi-camera-video"></i> <span>Video</span></a></li>
-        <li><a href="{{ route('admin.board_members.index') }}" class="nav-link {{ request()->routeIs('admin.board_members.*') ? 'active' : '' }}"><i class="bi bi-people"></i> <span>Board Member</span></a></li>
-        <li><a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}"><i class="bi bi-person"></i> <span>User</span></a></li>
-    </ul>
-</div>
+<aside class="sidebar" id="sidebar">
+    <p class="sidebar-label">Utama</p>
+    <nav>
+        <a href="{{ route('admin.dashboard') }}"
+           class="s-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <i class="bi bi-grid-1x2-fill"></i> Dashboard
+        </a>
+    </nav>
+
+    <p class="sidebar-label">Konten</p>
+    <nav>
+        <a href="{{ route('admin.articles.index') }}"
+           class="s-link {{ request()->routeIs('admin.articles.*') ? 'active' : '' }}">
+            <i class="bi bi-file-earmark-richtext"></i> Artikel
+        </a>
+        <a href="{{ route('admin.events.index') }}"
+           class="s-link {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">
+            <i class="bi bi-calendar2-event"></i> Event
+        </a>
+        <a href="{{ route('admin.videos.index') }}"
+           class="s-link {{ request()->routeIs('admin.videos.*') ? 'active' : '' }}">
+            <i class="bi bi-play-circle-fill"></i> Video
+        </a>
+    </nav>
+
+    <p class="sidebar-label">Organisasi</p>
+    <nav>
+        {{-- ✅ DROPDOWN Board Member --}}
+        @php $isBoardActive = request()->routeIs('admin.board_members.*'); @endphp
+        <a href="#boardMenu" data-bs-toggle="collapse"
+           aria-expanded="{{ $isBoardActive ? 'true' : 'false' }}"
+           class="s-link {{ $isBoardActive ? 'active' : '' }}">
+            <i class="bi bi-diagram-3-fill"></i>
+            <span>Pengurus & Anggota</span>
+            <i class="bi bi-chevron-down chev"></i>
+        </a>
+        <div class="collapse {{ $isBoardActive ? 'show' : '' }}" id="boardMenu">
+            <nav class="sub-nav">
+                <a href="{{ route('admin.board_members.index', ['type' => 'board']) }}"
+                   class="s-link {{ $isBoardActive && request()->get('type','board') === 'board' ? 'active' : '' }}">
+                    <i class="bi bi-people"></i> Kepengurusan
+                </a>
+                <a href="{{ route('admin.board_members.index', ['type' => 'member']) }}"
+                   class="s-link {{ $isBoardActive && request()->get('type') === 'member' ? 'active' : '' }}">
+                    <i class="bi bi-person-lines-fill"></i> Keanggotaan
+                </a>
+                <a href="{{ route('admin.board_members.index', ['type' => 'founder']) }}"
+                   class="s-link {{ $isBoardActive && request()->get('type') === 'founder' ? 'active' : '' }}">
+                    <i class="bi bi-diagram-3"></i> Struktur Organisasi
+                </a>
+            </nav>
+        </div>
+
+        <a href="{{ route('admin.users.index') }}"
+           class="s-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+            <i class="bi bi-person-circle"></i> Users
+        </a>
+    </nav>
+</aside>

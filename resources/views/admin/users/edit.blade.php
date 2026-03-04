@@ -1,38 +1,70 @@
 @extends('admin.layouts.app')
+@section('title', 'Edit User')
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="card card-dark mx-auto" style="max-width:600px;">
-        <div class="card-body">
-            <h2 class="mb-4">Edit User</h2>
-            <form action="{{ route('admin.users.update', $user) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="mb-3">
-                    <label for="name" class="form-label">Nama</label>
-                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $user->name) }}" required>
-                    @error('name')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+<div class="ph">
+    <div>
+        <h4>Edit User</h4>
+        <nav aria-label="breadcrumb"><ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Users</a></li>
+            <li class="breadcrumb-item active">Edit</li>
+        </ol></nav>
+    </div>
+    <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Kembali
+    </a>
+</div>
+
+<div class="card-admin" style="max-width:560px;">
+    <div style="padding:24px;">
+        <form action="{{ route('admin.users.update', $user) }}" method="POST" autocomplete="off">
+            @csrf
+            @method('PUT')
+
+            <div class="mb-3">
+                <label class="form-label">Nama <span style="color:var(--danger);">*</span></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" name="name"
+                           class="form-control @error('name') is-invalid @enderror"
+                           value="{{ old('name', $user->name) }}" required>
                 </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $user->email) }}" required>
-                    @error('email')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email <span style="color:var(--danger);">*</span></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input type="email" name="email"
+                           class="form-control @error('email') is-invalid @enderror"
+                           value="{{ old('email', $user->email) }}" required>
                 </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password (isi jika ingin ganti)</label>
-                    <input type="password" name="password" id="password" class="form-control">
-                    @error('password')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">
+                    Password Baru
+                    <small style="color:var(--muted);">(kosongkan jika tidak ingin mengubah)</small>
+                </label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    <input type="password" name="password"
+                           class="form-control @error('password') is-invalid @enderror"
+                           placeholder="Min. 6 karakter...">
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Kembali</a>
-            </form>
-        </div>
+                @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i> Update
+                </button>
+                <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Batal</a>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

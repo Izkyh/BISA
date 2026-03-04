@@ -1,99 +1,147 @@
 @extends('admin.layouts.app')
+@section('title', 'Tambah ' . $typeConfig['label'])
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="card shadow-lg rounded-4 border-0 mx-auto" style="max-width:700px;">
-        <div class="card-body p-4">
-            <h2 class="mb-4 fw-bold text-primary"><i class="bi bi-person-plus me-2"></i>Tambah Board Member</h2>
-            <form action="{{ route('admin.board_members.store') }}" method="POST" autocomplete="off">
-                enctype="multipart/form-data"
-                @csrf
-                <div class="mb-4">
-                    <label for="name" class="form-label fw-semibold fs-5">Nama <span class="text-danger">*</span></label>
+<div class="ph">
+    <div>
+        <h4>Tambah {{ $typeConfig['label'] }}</h4>
+        <nav aria-label="breadcrumb"><ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ route('admin.board_members.index', ['type' => $type]) }}">{{ $typeConfig['label'] }}</a>
+            </li>
+            <li class="breadcrumb-item active">Tambah</li>
+        </ol></nav>
+    </div>
+    <a href="{{ route('admin.board_members.index', ['type' => $type]) }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Kembali
+    </a>
+</div>
+
+<div class="card-admin" style="max-width:720px;">
+    <div style="padding:24px;">
+        {{-- ✅ enctype sebagai atribut form --}}
+        <form action="{{ route('admin.board_members.store') }}" method="POST"
+              enctype="multipart/form-data" autocomplete="off">
+            @csrf
+            {{-- ✅ type pre-filled dari URL --}}
+            <input type="hidden" name="type" value="{{ old('type', $type) }}">
+
+            {{-- info section --}}
+            <div class="mb-4 p-3 d-flex align-items-center gap-3"
+                 style="background:var(--accent)10; border:1px solid var(--accent)28; border-radius:10px;">
+                <i class="bi {{ $typeConfig['icon'] }} fs-4" style="color:var(--accent);"></i>
+                <div>
+                    <div style="font-weight:600; color:var(--text);">{{ $typeConfig['label'] }}</div>
+                    <small style="color:var(--muted);">
+                        @if($type === 'board') Pengurus aktif organisasi TIBA
+                        @elseif($type === 'member') Anggota terdaftar TIBA
+                        @else Pembina / Pendiri organisasi TIBA
+                        @endif
+                    </small>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Nama Lengkap <span style="color:var(--danger);">*</span></label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-person"></i></span>
-                        <input type="text" name="name" id="name" class="form-control form-control-lg" value="{{ old('name') }}" required>
+                        <input type="text" name="name"
+                               class="form-control @error('name') is-invalid @enderror"
+                               value="{{ old('name') }}" required placeholder="Nama lengkap...">
                     </div>
-                    @error('name')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-                <div class="mb-4">
-                    <label for="position" class="form-label fw-semibold fs-5">Jabatan <span class="text-danger">*</span></label>
+
+                <div class="col-md-6">
+                    <label class="form-label">Jabatan / Posisi <span style="color:var(--danger);">*</span></label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
-                        <input type="text" name="position" id="position" class="form-control form-control-lg" value="{{ old('position') }}" required>
+                        <input type="text" name="position"
+                               class="form-control @error('position') is-invalid @enderror"
+                               value="{{ old('position') }}" required
+                               placeholder="{{ $type === 'founder' ? 'Ketua Pembina' : ($type === 'board' ? 'Ketua Harian' : 'Anggota') }}">
                     </div>
-                    @error('position')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    @error('position')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-                <div class="mb-4">
-                    <label for="type" class="form-label fw-semibold fs-5">Tipe</label>
-                    <select name="type" id="type" class="form-select form-select-lg">
-                        <option value="founder" {{ old('type') == 'founder' ? 'selected' : '' }}>Founder</option>
-                        <option value="board" {{ old('type') == 'board' ? 'selected' : '' }}>Kepengurusan</option>
-                        <option value="member" {{ old('type') == 'member' ? 'selected' : '' }}>Anggota</option>
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <label for="birth_date" class="form-label fw-semibold fs-5">Tanggal Lahir</label>
-                    <input type="date" name="birth_date" id="birth_date" class="form-control form-control-lg" value="{{ old('birth_date') }}">
-                </div>
-                <div class="mb-4">
-                    <label for="gender" class="form-label fw-semibold fs-5">Jenis Kelamin</label>
-                    <select name="gender" id="gender" class="form-select form-select-lg">
-                        <option value="">-</option>
+
+                <div class="col-md-6">
+                    <label class="form-label">Jenis Kelamin</label>
+                    <select name="gender" class="form-select">
+                        <option value="">— Pilih —</option>
                         <option value="L" {{ old('gender') == 'L' ? 'selected' : '' }}>Laki-laki</option>
                         <option value="P" {{ old('gender') == 'P' ? 'selected' : '' }}>Perempuan</option>
                     </select>
                 </div>
-                <div class="mb-4">
-                    <label for="occupation" class="form-label fw-semibold fs-5">Pekerjaan</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-building"></i></span>
-                        <input type="text" name="occupation" id="occupation" class="form-control form-control-lg" value="{{ old('occupation') }}">
-                    </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Tanggal Lahir</label>
+                    <input type="date" name="birth_date" class="form-control" value="{{ old('birth_date') }}">
                 </div>
-                <div class="mb-4">
-                    <label for="address" class="form-label fw-semibold fs-5">Alamat</label>
-                    <textarea name="address" id="address" class="form-control form-control-lg" rows="2">{{ old('address') }}</textarea>
-                </div>
-                <div class="mb-4">
-                    <label for="phone" class="form-label fw-semibold fs-5">No. HP</label>
+
+                <div class="col-md-6">
+                    <label class="form-label">No. HP</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-                        <input type="text" name="phone" id="phone" class="form-control form-control-lg" value="{{ old('phone') }}">
+                        <input type="text" name="phone" class="form-control"
+                               value="{{ old('phone') }}" placeholder="08xxxxxxxxxx">
                     </div>
                 </div>
-                <div class="mb-4">
-                    <label for="social_media" class="form-label fw-semibold fs-5">Sosmed</label>
+
+                <div class="col-md-6">
+                    <label class="form-label">Media Sosial</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-instagram"></i></span>
-                        <input type="text" name="social_media" id="social_media" class="form-control form-control-lg" value="{{ old('social_media') }}">
+                        <input type="text" name="social_media" class="form-control"
+                               value="{{ old('social_media') }}" placeholder="@username">
                     </div>
                 </div>
-                <div class="mb-4">
-                    <label for="photo_path" class="form-label fw-semibold fs-5">Foto (max 10MB)</label>
-                    <input type="file" name="photo_path" id="photo_path" class="form-control form-control-lg" accept="image/*">
+
+                <div class="col-12">
+                    <label class="form-label">Pekerjaan / Profesi</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-building"></i></span>
+                        <input type="text" name="occupation" class="form-control"
+                               value="{{ old('occupation') }}" placeholder="Pekerjaan / profesi...">
+                    </div>
                 </div>
-                <div class="mb-4">
-                    <label for="order" class="form-label fw-semibold fs-5">Urutan Tampil</label>
-                    <input type="number" name="order" id="order" class="form-control form-control-lg" value="{{ old('order', 0) }}">
+
+                <div class="col-12">
+                    <label class="form-label">Alamat</label>
+                    <textarea name="address" class="form-control" rows="2"
+                              placeholder="Alamat lengkap...">{{ old('address') }}</textarea>
                 </div>
-                <div class="mb-4">
-                    <label for="is_active" class="form-label fw-semibold fs-5">Aktif?</label>
-                    <select name="is_active" id="is_active" class="form-select form-select-lg">
+
+                <div class="col-md-6">
+                    <label class="form-label">Foto <small style="color:var(--muted);">(max 10MB)</small></label>
+                    <input type="file" name="photo_path" class="form-control" accept="image/*">
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Urutan Tampil</label>
+                    <input type="number" name="order" class="form-control" value="{{ old('order', 0) }}" min="0">
+                    <small style="color:var(--muted); font-size:.75rem;">0 = paling awal</small>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select name="is_active" class="form-select">
                         <option value="1" {{ old('is_active', 1) == 1 ? 'selected' : '' }}>Aktif</option>
-                        <option value="0" {{ old('is_active') == 0 ? 'selected' : '' }}>Tidak Aktif</option>
+                        <option value="0" {{ old('is_active') == '0' ? 'selected' : '' }}>Nonaktif</option>
                     </select>
                 </div>
-                <div class="d-flex gap-2 mt-4">
-                    <button type="submit" class="btn btn-success btn-lg px-4"><i class="bi bi-check-circle me-2"></i>Simpan</button>
-                    <a href="{{ route('admin.board_members.index') }}" class="btn btn-secondary btn-lg px-4"><i class="bi bi-arrow-left me-2"></i>Kembali</a>
-                </div>
-            </form>
-        </div>
+            </div>
+
+            <hr class="section-divider">
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-check-lg"></i> Simpan
+                </button>
+                <a href="{{ route('admin.board_members.index', ['type' => $type]) }}"
+                   class="btn btn-secondary">Batal</a>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

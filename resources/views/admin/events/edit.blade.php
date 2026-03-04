@@ -1,56 +1,104 @@
 @extends('admin.layouts.app')
+@section('title', 'Edit Event')
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="card card-dark mx-auto" style="max-width:600px;">
-        <div class="card-body">
-            <h2 class="mb-4">Edit Event</h2>
-            <form action="{{ route('admin.events.update', $event) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="mb-3">
-                    <label for="title" class="form-label">Judul</label>
-                    <input type="text" name="title" id="title" class="form-control" value="{{ old('title', $event->title) }}" required>
-                    @error('title')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+<div class="ph">
+    <div>
+        <h4>Edit Event</h4>
+        <nav aria-label="breadcrumb"><ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.events.index') }}">Event</a></li>
+            <li class="breadcrumb-item active">Edit</li>
+        </ol></nav>
+    </div>
+    <a href="{{ route('admin.events.index') }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Kembali
+    </a>
+</div>
+
+<div class="card-admin" style="max-width:720px;">
+    <div style="padding:24px;">
+        <form action="{{ route('admin.events.update', $event) }}" method="POST"
+              enctype="multipart/form-data" autocomplete="off">
+            @csrf
+            @method('PUT')
+
+            <div class="row g-3">
+                <div class="col-12">
+                    <label class="form-label">Judul Event <span style="color:var(--danger);">*</span></label>
+                    <input type="text" name="title"
+                           class="form-control @error('title') is-invalid @enderror"
+                           value="{{ old('title', $event->title) }}" required>
+                    @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-                <div class="mb-3">
-                    <label for="category" class="form-label">Kategori</label>
-                    <select name="category" id="category" class="form-control" required>
-                        <option value="umum" {{ old('category', $event->category) == 'umum' ? 'selected' : '' }}>Umum</option>
-                        <option value="kelas" {{ old('category', $event->category) == 'kelas' ? 'selected' : '' }}>Kelas</option>
+
+                <div class="col-md-6">
+                    <label class="form-label">Kategori <span style="color:var(--danger);">*</span></label>
+                    <select name="category" class="form-select" required>
+                        <option value="umum"    {{ old('category', $event->category) == 'umum'    ? 'selected' : '' }}>Umum</option>
+                        <option value="kelas"   {{ old('category', $event->category) == 'kelas'   ? 'selected' : '' }}>Kelas</option>
                         <option value="seminar" {{ old('category', $event->category) == 'seminar' ? 'selected' : '' }}>Seminar</option>
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label for="start_time" class="form-label">Waktu Mulai</label>
-                    <input type="datetime-local" name="start_time" id="start_time" class="form-control" value="{{ old('start_time', $event->start_time) }}" required>
+
+                <div class="col-md-6">
+                    <label class="form-label">Tanggal Event <span style="color:var(--danger);">*</span></label>
+                    <input type="date" name="event_date" class="form-control"
+                           value="{{ old('event_date', $event->event_date?->format('Y-m-d')) }}" required>
                 </div>
-                <div class="mb-3">
-                    <label for="end_time" class="form-label">Waktu Selesai</label>
-                    <input type="datetime-local" name="end_time" id="end_time" class="form-control" value="{{ old('end_time', $event->end_time) }}" required>
+
+                <div class="col-md-6">
+                    <label class="form-label">Waktu Mulai <span style="color:var(--danger);">*</span></label>
+                    <input type="datetime-local" name="start_time" class="form-control"
+                           value="{{ old('start_time', $event->start_time?->format('Y-m-d\TH:i')) }}" required>
                 </div>
-                <div class="mb-3">
-                    <label for="event_date" class="form-label">Tanggal Event</label>
-                    <input type="date" name="event_date" id="event_date" class="form-control" value="{{ old('event_date', $event->event_date) }}" required>
+
+                <div class="col-md-6">
+                    <label class="form-label">Waktu Selesai <span style="color:var(--danger);">*</span></label>
+                    <input type="datetime-local" name="end_time" class="form-control"
+                           value="{{ old('end_time', $event->end_time?->format('Y-m-d\TH:i')) }}" required>
                 </div>
-                <div class="mb-3">
-                    <label for="location" class="form-label">Lokasi</label>
-                    <input type="text" name="location" id="location" class="form-control" value="{{ old('location', $event->location) }}" required>
+
+                <div class="col-12">
+                    <label class="form-label">Lokasi <span style="color:var(--danger);">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                        <input type="text" name="location" class="form-control"
+                               value="{{ old('location', $event->location) }}" required>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="link" class="form-label">Link (opsional)</label>
-                    <input type="text" name="link" id="link" class="form-control" value="{{ old('link', $event->link) }}">
+
+                <div class="col-12">
+                    <label class="form-label">Link Pendaftaran <small style="color:var(--muted);">(opsional)</small></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                        <input type="url" name="link" class="form-control"
+                               value="{{ old('link', $event->link) }}">
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="image_path" class="form-label">Image Path</label>
-                    <input type="text" name="image_path" id="image_path" class="form-control" value="{{ old('image_path', $event->image_path) }}">
+
+                <div class="col-12">
+                    <label class="form-label">Gambar Event</label>
+                    @if($event->image_path)
+                    <div class="mb-2">
+                        <img src="{{ asset('storage/' . $event->image_path) }}"
+                             style="height:80px; border-radius:8px; border:1px solid var(--border);">
+                        <small style="color:var(--muted); display:block; margin-top:4px;">Gambar saat ini</small>
+                    </div>
+                    @endif
+                    <input type="file" name="image" class="form-control" accept="image/*">
+                    <small style="color:var(--muted);">Biarkan kosong jika tidak ingin mengubah gambar</small>
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{ route('admin.events.index') }}" class="btn btn-secondary">Kembali</a>
-            </form>
-        </div>
+            </div>
+
+            <hr class="section-divider">
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i> Update
+                </button>
+                <a href="{{ route('admin.events.index') }}" class="btn btn-secondary">Batal</a>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

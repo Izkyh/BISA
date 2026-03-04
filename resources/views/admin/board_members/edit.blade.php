@@ -1,92 +1,139 @@
 @extends('admin.layouts.app')
+@section('title', 'Edit ' . $typeConfig['label'])
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="card card-dark mx-auto" style="max-width:600px;">
-        <div class="card-body">
-            <h2 class="mb-4">Edit Board Member</h2>
-            <form action="{{ route('admin.board_members.update', $boardMember) }}" method="POST" autocomplete="off">
-                @csrf
-                @method('PUT')
-                <div class="mb-4">
-                    <label for="name" class="form-label fw-semibold fs-5">Nama <span class="text-danger">*</span></label>
+<div class="ph">
+    <div>
+        <h4>Edit {{ $typeConfig['label'] }}</h4>
+        <nav aria-label="breadcrumb"><ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ route('admin.board_members.index', ['type' => $type]) }}">{{ $typeConfig['label'] }}</a>
+            </li>
+            <li class="breadcrumb-item active">Edit</li>
+        </ol></nav>
+    </div>
+    <a href="{{ route('admin.board_members.index', ['type' => $type]) }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Kembali
+    </a>
+</div>
+
+<div class="card-admin" style="max-width:720px;">
+    <div style="padding:24px;">
+        {{-- ✅ enctype + file upload sekarang berfungsi --}}
+        <form action="{{ route('admin.board_members.update', $boardMember) }}" method="POST"
+              enctype="multipart/form-data" autocomplete="off">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="type" value="{{ old('type', $boardMember->type) }}">
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Nama Lengkap <span style="color:var(--danger);">*</span></label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-person"></i></span>
-                        <input type="text" name="name" id="name" class="form-control form-control-lg" value="{{ old('name', $boardMember->name) }}" required>
+                        <input type="text" name="name"
+                               class="form-control @error('name') is-invalid @enderror"
+                               value="{{ old('name', $boardMember->name) }}" required>
                     </div>
+                    @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-                <div class="mb-4">
-                    <label for="position" class="form-label fw-semibold fs-5">Jabatan <span class="text-danger">*</span></label>
+
+                <div class="col-md-6">
+                    <label class="form-label">Jabatan / Posisi <span style="color:var(--danger);">*</span></label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
-                        <input type="text" name="position" id="position" class="form-control form-control-lg" value="{{ old('position', $boardMember->position) }}" required>
+                        <input type="text" name="position"
+                               class="form-control @error('position') is-invalid @enderror"
+                               value="{{ old('position', $boardMember->position) }}" required>
                     </div>
+                    @error('position')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-                <div class="mb-4">
-                    <label for="type" class="form-label fw-semibold fs-5">Tipe</label>
-                    <select name="type" id="type" class="form-select form-select-lg">
-                        <option value="founder" {{ old('type', $boardMember->type) == 'founder' ? 'selected' : '' }}>Founder</option>
-                        <option value="board" {{ old('type', $boardMember->type) == 'board' ? 'selected' : '' }}>Kepengurusan</option>
-                        <option value="member" {{ old('type', $boardMember->type) == 'member' ? 'selected' : '' }}>Anggota</option>
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <label for="birth_date" class="form-label fw-semibold fs-5">Tanggal Lahir</label>
-                    <input type="date" name="birth_date" id="birth_date" class="form-control form-control-lg" value="{{ old('birth_date', $boardMember->birth_date) }}">
-                </div>
-                <div class="mb-4">
-                    <label for="gender" class="form-label fw-semibold fs-5">Jenis Kelamin</label>
-                    <select name="gender" id="gender" class="form-select form-select-lg">
-                        <option value="">-</option>
+
+                <div class="col-md-6">
+                    <label class="form-label">Jenis Kelamin</label>
+                    <select name="gender" class="form-select">
+                        <option value="">— Pilih —</option>
                         <option value="L" {{ old('gender', $boardMember->gender) == 'L' ? 'selected' : '' }}>Laki-laki</option>
                         <option value="P" {{ old('gender', $boardMember->gender) == 'P' ? 'selected' : '' }}>Perempuan</option>
                     </select>
                 </div>
-                <div class="mb-4">
-                    <label for="occupation" class="form-label fw-semibold fs-5">Pekerjaan</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-building"></i></span>
-                        <input type="text" name="occupation" id="occupation" class="form-control form-control-lg" value="{{ old('occupation', $boardMember->occupation) }}">
-                    </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Tanggal Lahir</label>
+                    <input type="date" name="birth_date" class="form-control"
+                           value="{{ old('birth_date', $boardMember->birth_date?->format('Y-m-d')) }}">
                 </div>
-                <div class="mb-4">
-                    <label for="address" class="form-label fw-semibold fs-5">Alamat</label>
-                    <textarea name="address" id="address" class="form-control form-control-lg" rows="2">{{ old('address', $boardMember->address) }}</textarea>
-                </div>
-                <div class="mb-4">
-                    <label for="phone" class="form-label fw-semibold fs-5">No. HP</label>
+
+                <div class="col-md-6">
+                    <label class="form-label">No. HP</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-                        <input type="text" name="phone" id="phone" class="form-control form-control-lg" value="{{ old('phone', $boardMember->phone) }}">
+                        <input type="text" name="phone" class="form-control"
+                               value="{{ old('phone', $boardMember->phone) }}">
                     </div>
                 </div>
-                <div class="mb-4">
-                    <label for="social_media" class="form-label fw-semibold fs-5">Sosmed</label>
+
+                <div class="col-md-6">
+                    <label class="form-label">Media Sosial</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-instagram"></i></span>
-                        <input type="text" name="social_media" id="social_media" class="form-control form-control-lg" value="{{ old('social_media', $boardMember->social_media) }}">
+                        <input type="text" name="social_media" class="form-control"
+                               value="{{ old('social_media', $boardMember->social_media) }}">
                     </div>
                 </div>
-                <div class="mb-4">
-                    <label for="photo_path" class="form-label fw-semibold fs-5">Foto (path)</label>
-                    <input type="text" name="photo_path" id="photo_path" class="form-control form-control-lg" value="{{ old('photo_path', $boardMember->photo_path) }}">
+
+                <div class="col-12">
+                    <label class="form-label">Pekerjaan / Profesi</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-building"></i></span>
+                        <input type="text" name="occupation" class="form-control"
+                               value="{{ old('occupation', $boardMember->occupation) }}">
+                    </div>
                 </div>
-                <div class="mb-4">
-                    <label for="order" class="form-label fw-semibold fs-5">Urutan Tampil</label>
-                    <input type="number" name="order" id="order" class="form-control form-control-lg" value="{{ old('order', $boardMember->order) }}">
+
+                <div class="col-12">
+                    <label class="form-label">Alamat</label>
+                    <textarea name="address" class="form-control" rows="2">{{ old('address', $boardMember->address) }}</textarea>
                 </div>
-                <div class="mb-4">
-                    <label for="is_active" class="form-label fw-semibold fs-5">Aktif?</label>
-                    <select name="is_active" id="is_active" class="form-select form-select-lg">
-                        <option value="1" {{ old('is_active', $boardMember->is_active) == 1 ? 'selected' : '' }}>Aktif</option>
-                        <option value="0" {{ old('is_active', $boardMember->is_active) == 0 ? 'selected' : '' }}>Tidak Aktif</option>
+
+                <div class="col-md-6">
+                    <label class="form-label">Foto</label>
+                    @if($boardMember->photo_path)
+                    <div class="mb-2 d-flex align-items-center gap-2">
+                        <img src="{{ $boardMember->photo_url }}"
+                             style="width:52px; height:52px; border-radius:50%; object-fit:cover; border:2px solid var(--border);">
+                        <small style="color:var(--muted);">Foto saat ini</small>
+                    </div>
+                    @endif
+                    <input type="file" name="photo_path" class="form-control" accept="image/*">
+                    <small style="color:var(--muted); font-size:.75rem;">Biarkan kosong jika tidak ingin mengubah foto</small>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Urutan Tampil</label>
+                    <input type="number" name="order" class="form-control"
+                           value="{{ old('order', $boardMember->order) }}" min="0">
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select name="is_active" class="form-select">
+                        <option value="1" {{ old('is_active', $boardMember->is_active ? 1 : 0) == 1 ? 'selected' : '' }}>Aktif</option>
+                        <option value="0" {{ old('is_active', $boardMember->is_active ? 1 : 0) == 0 ? 'selected' : '' }}>Nonaktif</option>
                     </select>
                 </div>
-                <div class="d-flex gap-2 mt-4">
-                    <button type="submit" class="btn btn-primary btn-lg px-4"><i class="bi bi-check-circle me-2"></i>Update</button>
-                    <a href="{{ route('admin.board_members.index') }}" class="btn btn-secondary btn-lg px-4"><i class="bi bi-arrow-left me-2"></i>Kembali</a>
-                </div>
-        </div>
+            </div>
+
+            <hr class="section-divider">
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i> Update
+                </button>
+                <a href="{{ route('admin.board_members.index', ['type' => $type]) }}"
+                   class="btn btn-secondary">Batal</a>
+            </div>
+        </form>
     </div>
 </div>
 @endsection
