@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BoardMember;
-use Illuminate\Http\Request;
+
 
 class ProfileController extends Controller
 {

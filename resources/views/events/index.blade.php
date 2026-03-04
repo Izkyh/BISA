@@ -70,6 +70,12 @@
             {{ $events->links('vendor.pagination.events') }}
         </nav>
     @endif
+    <div class="row mt-4">
+        <div class="col d-flex justify-content-between">
+            <a href="#" class="btn btn-secondary btn-lg px-4"><i class="bi bi-arrow-left"></i> Previous</a>
+            <a href="#" class="btn btn-secondary btn-lg px-4">Next <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')

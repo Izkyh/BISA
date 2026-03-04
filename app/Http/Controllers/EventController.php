@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Article;
+// use Illuminate\Http\Request; // dihapus jika tidak dipakai
 
 class EventController extends Controller
 {

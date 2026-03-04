@@ -26,7 +26,7 @@ class Event extends Model
     protected $casts = [
         'start_time' => 'datetime',
         'end_time' => 'datetime',
-        'event_date' => 'date',
+        'event_date' => 'date:Y-m-d',
     ];
 
     /**
@@ -108,7 +108,8 @@ class Event extends Model
      */
     public function isToday(): bool
     {
-        return $this->event_date->isToday();
+        $date = Carbon::parse($this->event_date);
+        return $date->isToday();
     }
 
     /**
@@ -116,10 +117,9 @@ class Event extends Model
      */
     public function getFormattedDateRangeAttribute(): string
     {
-        $date = $this->event_date->format('d M Y');
-        $startTime = $this->start_time->format('H:i');
-        $endTime = $this->end_time->format('H:i');
-
+        $date = Carbon::parse($this->event_date)->format('d M Y');
+        $startTime = Carbon::parse($this->start_time)->format('H:i');
+        $endTime = Carbon::parse($this->end_time)->format('H:i');
         return "{$date}, {$startTime} - {$endTime} WIB";
     }
 
@@ -129,6 +129,7 @@ class Event extends Model
     public function getFormattedDateAttribute(): string
     {
         Carbon::setLocale('id');
-        return $this->event_date->translatedFormat('l, d F Y');
+        $date = Carbon::parse($this->event_date);
+        return $date->translatedFormat('l, d F Y');
     }
 }

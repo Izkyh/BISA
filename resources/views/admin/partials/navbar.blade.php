@@ -1,0 +1,9 @@
+<nav class="navbar navbar-dark navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1"><i class="bi bi-shield-lock"></i> TIBA Admin</span>
+        <div class="d-flex align-items-center">
+            <span class="admin-avatar"><i class="bi bi-person"></i></span>
+            <a href="{{ route('admin.logout') }}" class="btn btn-outline-light btn-sm"><i class="bi bi-box-arrow-right"></i> Logout</a>
+        </div>
+    </div>
+</nav>

@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -46,13 +44,5 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
-    /**
-     * Determine if the user can access Filament panel
-     */
-    public function canAccessPanel(Panel $panel): bool
-    {
-        // Untuk saat ini, semua user yang ada bisa akses
-        // Nanti bisa ditambahkan role/permission check
-        return true;
-    }
+    // ...existing code...
 }
