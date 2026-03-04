@@ -1,24 +1,50 @@
 <div class="sidebar">
-    {{-- Artikel Terbaru --}}
+
+    {{-- ── Artikel Terbaru ─────────────────────────────────────── --}}
     <div class="sidebar-section" id="sidebarArtikel">
         <div class="sidebar-box">
-            <h6>Artikel Terbaru</h6>
+            <h6><i class="fas fa-newspaper"></i> Artikel Terbaru</h6>
+
             {{-- Search Bar --}}
             <div class="sidebar-search">
                 <div class="input-group">
-                    <input type="text" id="sidebarSearchInput" class="form-control" placeholder="Cari di sidebar...">
-                    <button class="btn btn-outline-secondary" type="button">
+                    <input type="text" id="sidebarSearchInput"
+                           class="form-control"
+                           placeholder="Cari artikel atau kegiatan..."
+                           autocomplete="off">
+                    <button class="btn" type="button">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
+                <div id="searchInfo" class="search-info" style="display:none;">
+                    <small>
+                        <span id="searchInfoText"></span>
+                        <button type="button" id="clearSearch" class="clear-search">
+                            <i class="fas fa-times"></i> Reset
+                        </button>
+                    </small>
+                </div>
             </div>
+
             <ul class="sidebar-list" id="artikelList">
-                @forelse($popularArticles ?? [] as $index => $article)
+                @forelse($popularArticles ?? [] as $article)
                     <li class="sidebar-item" data-title="{{ strtolower($article->title) }}">
-                        <div class="sidebar-number">{{ $index + 1 }}</div>
-                        <div>
-                            <a href="{{ route('articles.show', $article->slug) }}" class="text-decoration-none text-dark">
-                                <strong>{{ Str::limit($article->title, 50) }}</strong>
+
+                        {{-- ✅ Thumbnail artikel --}}
+                        <div class="sidebar-thumb">
+                            @if($article->image_path)
+                                <img src="{{ Storage::url($article->image_path) }}"
+                                     alt="{{ $article->title }}">
+                            @else
+                                <div class="sidebar-thumb-placeholder">
+                                    <i class="fas fa-newspaper"></i>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="sidebar-item-content">
+                            <a href="{{ route('articles.show', $article->slug) }}">
+                                <strong>{{ Str::limit($article->title, 55) }}</strong>
                             </a>
                             <small>
                                 <i class="fa-regular fa-calendar"></i>
@@ -27,145 +53,156 @@
                         </div>
                     </li>
                 @empty
-                    <li class="sidebar-item">
-                        <div class="text-muted">Belum ada artikel terbaru</div>
+                    <li class="sidebar-item sidebar-empty">
+                        <i class="fas fa-inbox"></i>
+                        <span>Belum ada artikel terbaru.</span>
                     </li>
                 @endforelse
+
+                <li class="sidebar-item no-result-message" id="noResultArtikel" style="display:none;">
+                    <i class="fas fa-search"></i>
+                    <span>Tidak ada artikel yang ditemukan.</span>
+                </li>
             </ul>
-            <a href="{{ route('articles.index') }}" class="view-all-btn">Lihat Semua Artikel</a>
+
+            <a href="{{ route('articles.index') }}" class="view-all-btn">
+                Lihat Semua Artikel
+            </a>
         </div>
     </div>
 
-    {{-- Kegiatan Mendatang --}}
-    <div class="sidebar-section mt-4" id="sidebarKegiatan">
+    {{-- ── Kegiatan Mendatang ──────────────────────────────────── --}}
+    <div class="sidebar-section" id="sidebarKegiatan">
         <div class="sidebar-box">
-            <h6>Kegiatan Mendatang</h6>
+            <h6><i class="fas fa-calendar-alt"></i> Kegiatan Mendatang</h6>
+
             <ul class="sidebar-list" id="kegiatanList">
-                @forelse($upcomingEvents ?? [] as $index => $event)
+                @forelse($upcomingEvents ?? [] as $event)
                     <li class="sidebar-item" data-title="{{ strtolower($event->title) }}">
-                        <div class="sidebar-number">{{ $index + 1 }}</div>
-                        <div>
-                            <a href="{{ route('events.index') }}" class="text-decoration-none text-dark">
-                                <strong>{{ Str::limit($event->title, 50) }}</strong>
+
+                        {{-- ✅ Thumbnail kegiatan --}}
+                        <div class="sidebar-thumb">
+                            @if($event->image_path)
+                                <img src="{{ Storage::url($event->image_path) }}"
+                                     alt="{{ $event->title }}">
+                            @else
+                                {{-- Placeholder dengan warna per kategori --}}
+                                <div class="sidebar-thumb-placeholder cat-{{ $event->category }}">
+                                    @if($event->category === 'kelas')
+                                        <i class="fas fa-chalkboard-teacher"></i>
+                                    @elseif($event->category === 'seminar')
+                                        <i class="fas fa-microphone-alt"></i>
+                                    @else
+                                        <i class="fas fa-users"></i>
+                                    @endif
+                                </div>
+                            @endif
+
+                            {{-- ✅ Badge tanggal di atas thumbnail --}}
+                            <div class="sidebar-thumb-date">
+                                <span class="day">{{ $event->event_date->format('d') }}</span>
+                                <span class="month">{{ $event->event_date->format('M') }}</span>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-item-content">
+                            <a href="{{ route('events.index') }}">
+                                <strong>{{ Str::limit($event->title, 55) }}</strong>
                             </a>
+
+                            {{-- Info lokasi + waktu --}}
                             <small>
-                                <i class="fa-regular fa-calendar"></i>
-                                {{ $event->event_date->format('d M Y') }}
+                                <i class="fas fa-clock"></i>
+                                {{ $event->start_time->format('H:i') }} WIB
                             </small>
+                            <small>
+                                <i class="fas fa-map-marker-alt"></i>
+                                {{ Str::limit($event->location, 28) }}
+                            </small>
+
+                            {{-- Badge kategori + segera --}}
+                            <div class="sidebar-badges">
+                                <span class="event-category-badge badge-{{ $event->category }}">
+                                    {{ ucfirst($event->category) }}
+                                </span>
+                                @php $diff = now()->diffInDays($event->event_date, false); @endphp
+                                @if($diff >= 0 && $diff <= 7)
+                                    <span class="badge-soon">
+                                        {{ $diff == 0 ? 'Hari ini!' : $diff . ' hari lagi' }}
+                                    </span>
+                                @endif
+                            </div>
                         </div>
                     </li>
                 @empty
-                    <li class="sidebar-item">
-                        <div class="text-muted">Belum ada kegiatan mendatang</div>
+                    <li class="sidebar-item sidebar-empty">
+                        <i class="fas fa-calendar-times"></i>
+                        <span>Belum ada kegiatan mendatang.</span>
                     </li>
                 @endforelse
+
+                <li class="sidebar-item no-result-message" id="noResultKegiatan" style="display:none;">
+                    <i class="fas fa-search"></i>
+                    <span>Tidak ada kegiatan yang ditemukan.</span>
+                </li>
             </ul>
-            <a href="{{ route('events.index') }}" class="view-all-btn">Lihat Semua Kegiatan</a>
+
+            <a href="{{ route('events.index') }}" class="view-all-btn">
+                Lihat Semua Kegiatan
+            </a>
         </div>
     </div>
+
 </div>
 
 @push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('sidebarSearchInput');
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput   = document.getElementById('sidebarSearchInput');
+    const clearBtn      = document.getElementById('clearSearch');
+    const searchInfo    = document.getElementById('searchInfo');
+    const searchInfoTxt = document.getElementById('searchInfoText');
 
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
+    if (!searchInput) return;
 
-            // Search dalam Artikel Terbaru
-            const artikelItems = document.querySelectorAll('#artikelList .sidebar-item');
-            let artikelVisibleCount = 0;
+    function filterList(listId, noResultId) {
+        const term  = searchInput.value.toLowerCase().trim();
+        const items = document.querySelectorAll(
+            `#${listId} .sidebar-item:not(.no-result-message):not(.sidebar-empty)`
+        );
+        let count = 0;
 
-            artikelItems.forEach(function(item) {
-                const title = item.getAttribute('data-title');
-                // Skip items without title (empty state)
-                if (!title) {
-                    item.style.display = '';
-                    return;
-                }
-
-                if (searchTerm === '' || title.includes(searchTerm)) {
-                    item.style.display = 'flex';
-                    artikelVisibleCount++;
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-
-            // Search dalam Kegiatan Mendatang
-            const kegiatanItems = document.querySelectorAll('#kegiatanList .sidebar-item');
-            let kegiatanVisibleCount = 0;
-
-            kegiatanItems.forEach(function(item) {
-                const title = item.getAttribute('data-title');
-                // Skip items without title (empty state)
-                if (!title) {
-                    item.style.display = '';
-                    return;
-                }
-
-                if (searchTerm === '' || title.includes(searchTerm)) {
-                    item.style.display = 'flex';
-                    kegiatanVisibleCount++;
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-
-            // PENTING: Jangan hide sidebar sections, hanya hide items
-            // Sidebar sections tetap visible
-            const sidebarArtikel = document.getElementById('sidebarArtikel');
-            const sidebarKegiatan = document.getElementById('sidebarKegiatan');
-
-            // Always keep sections visible
-            if (sidebarArtikel) {
-                sidebarArtikel.style.display = '';
-            }
-            if (sidebarKegiatan) {
-                sidebarKegiatan.style.display = '';
-            }
-
-            // Optional: Show "Tidak ada hasil" message
-            if (searchTerm) {
-                // Check if artikel section has visible items
-                if (artikelVisibleCount === 0 && artikelItems.length > 0) {
-                    const noResultArtikel = document.querySelector('#artikelList .no-result-message');
-                    if (!noResultArtikel) {
-                        const message = document.createElement('li');
-                        message.className = 'sidebar-item no-result-message';
-                        message.innerHTML = '<div class="text-muted">Tidak ada artikel yang ditemukan</div>';
-                        document.getElementById('artikelList').appendChild(message);
-                    }
-                } else {
-                    const noResultArtikel = document.querySelector('#artikelList .no-result-message');
-                    if (noResultArtikel) {
-                        noResultArtikel.remove();
-                    }
-                }
-
-                // Check if kegiatan section has visible items
-                if (kegiatanVisibleCount === 0 && kegiatanItems.length > 0) {
-                    const noResultKegiatan = document.querySelector('#kegiatanList .no-result-message');
-                    if (!noResultKegiatan) {
-                        const message = document.createElement('li');
-                        message.className = 'sidebar-item no-result-message';
-                        message.innerHTML = '<div class="text-muted">Tidak ada kegiatan yang ditemukan</div>';
-                        document.getElementById('kegiatanList').appendChild(message);
-                    }
-                } else {
-                    const noResultKegiatan = document.querySelector('#kegiatanList .no-result-message');
-                    if (noResultKegiatan) {
-                        noResultKegiatan.remove();
-                    }
-                }
-            } else {
-                // Clear "no result" messages when search is cleared
-                document.querySelectorAll('.no-result-message').forEach(msg => msg.remove());
-            }
+        items.forEach(item => {
+            const title = item.getAttribute('data-title') || '';
+            const show  = term === '' || title.includes(term);
+            item.style.display = show ? 'flex' : 'none';
+            if (show) count++;
         });
+
+        const noResult = document.getElementById(noResultId);
+        if (noResult) {
+            noResult.style.display = (term !== '' && count === 0) ? 'flex' : 'none';
+        }
+
+        return count;
     }
+
+    function updateSearchInfo(a, k) {
+        const term = searchInput.value.trim();
+        if (!term) { searchInfo.style.display = 'none'; return; }
+        searchInfoTxt.textContent = `${a + k} hasil untuk "${term}"`;
+        searchInfo.style.display = 'block';
+    }
+
+    function runSearch() {
+        const a = filterList('artikelList',  'noResultArtikel');
+        const k = filterList('kegiatanList', 'noResultKegiatan');
+        updateSearchInfo(a, k);
+    }
+
+    searchInput.addEventListener('input', runSearch);
+    clearBtn?.addEventListener('click', () => { searchInput.value = ''; runSearch(); searchInput.focus(); });
+    searchInput.addEventListener('keydown', e => { if (e.key === 'Escape') { searchInput.value = ''; runSearch(); } });
 });
 </script>
 @endpush

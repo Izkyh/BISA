@@ -1,20 +1,63 @@
 // ============================================
-// HERO SECTION - Homepage
+// HERO SECTION - Slideshow
 // ============================================
 
 .hero {
     height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)),
-        url('/foto/TJN_8122.JPG') no-repeat center center;
-    background-size: cover;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: var(--white-color);
-    position: relative;
+    overflow: hidden;
 
+    .hero-slides {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden; // ✅ penting
+    }
+
+    .hero-slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        opacity: 0;
+        transform: translateX(100%); // ✅ mulai dari kanan
+        transition:
+            transform 1.2s cubic-bezier(0.65, 0, 0.35, 1),
+            opacity 1.2s ease;
+
+        &.active {
+            opacity: 1;
+            transform: translateX(0); // ✅ masuk ke tengah
+        }
+
+        &.prev {
+            transform: translateX(-100%); // ✅ keluar ke kiri
+        }
+    }
+
+    // ── Gradient overlay ───────────────────────────────────────────
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            160deg,
+            rgba(0, 0, 0, 0.65) 0%,
+            rgba(0, 0, 0, 0.35) 60%,
+            rgba(0, 0, 0, 0.55) 100%
+        );
+        z-index: 1;
+    }
+
+    // ── Text content ───────────────────────────────────────────────
     .hero-text {
+        position: relative;
+        z-index: 2;
         max-width: 900px;
         padding: 0 20px;
         animation: fadeInUp 1s ease;
@@ -24,7 +67,7 @@
             font-weight: 700;
             line-height: 1.2;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
         }
 
         p {
@@ -32,7 +75,7 @@
             max-width: 700px;
             margin: 20px auto 30px auto;
             line-height: 1.6;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
         }
 
         .btn {
@@ -40,9 +83,75 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
     }
+
+    // ── Dot indicators ─────────────────────────────────────────────
+    .hero-dots {
+        position: absolute;
+        bottom: 32px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        z-index: 3;
+    }
+
+    .hero-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        background: transparent;
+        cursor: pointer;
+        padding: 0;
+        transition: all 0.3s ease;
+
+        &.active {
+            background: #fff;
+            border-color: #fff;
+            transform: scale(1.3);
+        }
+
+        &:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    }
+
+    // ── Arrow buttons ──────────────────────────────────────────────
+    .hero-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 3;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #fff;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.25s ease;
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.28);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        &.hero-arrow-prev {
+            left: 24px;
+        }
+        &.hero-arrow-next {
+            right: 24px;
+        }
+    }
 }
 
-// Animation
+// ── Animation ─────────────────────────────────────────────────────────
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -54,48 +163,44 @@
     }
 }
 
-// Responsive
+// ── Responsive ────────────────────────────────────────────────────────
 @media (max-width: $breakpoint-lg) {
-    .hero {
-        .hero-text {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            p {
-                font-size: 1rem;
-            }
-        }
+    .hero .hero-text h1 {
+        font-size: 2.5rem;
+    }
+    .hero .hero-text p {
+        font-size: 1rem;
     }
 }
 
 @media (max-width: $breakpoint-md) {
     .hero {
         height: 80vh;
-
-        .hero-text {
-            h1 {
-                font-size: 2rem;
-            }
-
-            p {
-                font-size: 0.95rem;
-                margin: 15px auto 25px;
-            }
+        .hero-text h1 {
+            font-size: 2rem;
+        }
+        .hero-text p {
+            font-size: 0.95rem;
+            margin: 15px auto 25px;
+        }
+        .hero-arrow {
+            width: 38px;
+            height: 38px;
+            font-size: 0.85rem;
         }
     }
 }
 
 @media (max-width: $breakpoint-sm) {
     .hero {
-        .hero-text {
-            h1 {
-                font-size: 1.75rem;
-            }
-
-            p {
-                font-size: 0.9rem;
-            }
+        .hero-text h1 {
+            font-size: 1.75rem;
         }
+        .hero-text p {
+            font-size: 0.9rem;
+        }
+        .hero-arrow {
+            display: none;
+        } // sembunyikan arrow di HP kecil
     }
 }
