@@ -67,10 +67,6 @@ class Article extends Model
     /**
      * Scope untuk artikel terbaru
      */
-    public function scopeLatest($query)
-    {
-        return $query->orderBy('created_at', 'desc');
-    }
 
     /**
      * Scope untuk artikel populer (berdasarkan created_at)

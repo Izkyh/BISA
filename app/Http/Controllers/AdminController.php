@@ -24,11 +24,6 @@ class AdminController extends Controller
         return back()->withErrors(['email' => 'Email atau password salah']);
     }
 
-    public function dashboard()
-    {
-        return view('admin.dashboard');
-    }
-
     public function logout()
     {
         Auth::logout();

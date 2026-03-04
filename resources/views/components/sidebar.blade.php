@@ -33,8 +33,7 @@
                         {{-- ✅ Thumbnail artikel --}}
                         <div class="sidebar-thumb">
                             @if($article->image_path)
-                                <img src="{{ Storage::url($article->image_path) }}"
-                                     alt="{{ $article->title }}">
+                                <img src="{{ Storage::url($article->image_path) }}" alt="{{ $article->title }}">
                             @else
                                 <div class="sidebar-thumb-placeholder">
                                     <i class="fas fa-newspaper"></i>
@@ -83,8 +82,7 @@
                         {{-- ✅ Thumbnail kegiatan --}}
                         <div class="sidebar-thumb">
                             @if($event->image_path)
-                                <img src="{{ Storage::url($event->image_path) }}"
-                                     alt="{{ $event->title }}">
+                                <img src="{{ Storage::url($event->image_path) }}" alt="{{ $event->title }}">
                             @else
                                 {{-- Placeholder dengan warna per kategori --}}
                                 <div class="sidebar-thumb-placeholder cat-{{ $event->category }}">
@@ -125,10 +123,21 @@
                                 <span class="event-category-badge badge-{{ $event->category }}">
                                     {{ ucfirst($event->category) }}
                                 </span>
-                                @php $diff = now()->diffInDays($event->event_date, false); @endphp
-                                @if($diff >= 0 && $diff <= 7)
+                                @php
+                                    $diffDays  = now()->diffInDays($event->event_date, false);
+                                    $diffHours = now()->diffInHours($event->event_date, false);
+                                @endphp
+                                @if($diffDays >= 0 && $diffDays <= 7)
                                     <span class="badge-soon">
-                                        {{ $diff == 0 ? 'Hari ini!' : $diff . ' hari lagi' }}
+                                        @if($diffHours <= 24)
+                                            Hari ini!
+                                        @elseif($diffDays == 1)
+                                            Besok
+                                        @elseif($diffDays == 2)
+                                            2 hari lagi
+                                        @else
+                                            Segera
+                                        @endif
                                     </span>
                                 @endif
                             </div>
@@ -180,9 +189,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         const noResult = document.getElementById(noResultId);
-        if (noResult) {
+        if (noResult)
             noResult.style.display = (term !== '' && count === 0) ? 'flex' : 'none';
-        }
 
         return count;
     }
@@ -201,8 +209,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     searchInput.addEventListener('input', runSearch);
-    clearBtn?.addEventListener('click', () => { searchInput.value = ''; runSearch(); searchInput.focus(); });
-    searchInput.addEventListener('keydown', e => { if (e.key === 'Escape') { searchInput.value = ''; runSearch(); } });
+    clearBtn?.addEventListener('click', () => {
+        searchInput.value = '';
+        runSearch();
+        searchInput.focus();
+    });
+    searchInput.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            searchInput.value = '';
+            runSearch();
+        }
+    });
 });
 </script>
 @endpush
