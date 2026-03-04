@@ -7,15 +7,14 @@ use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        User::create([
-            'name' => 'Admin TIBA',
-            'email' => 'admin@tibasurabaya.com',
-            'password' => Hash::make('password'),
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@tibasurabaya.com'],
+            [
+                'name'     => 'Admin TIBA',
+                'password' => Hash::make('password'),
+            ]
+        );
     }
 }
