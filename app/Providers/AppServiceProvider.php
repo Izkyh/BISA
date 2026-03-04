@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use App\Models\Article;
 use App\Models\Event;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::useBootstrapFive();
         // Register Blade Components
         Blade::component('navbar', \App\View\Components\Navbar::class);
         Blade::component('sidebar', \App\View\Components\Sidebar::class);
