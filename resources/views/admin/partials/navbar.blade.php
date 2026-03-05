@@ -3,7 +3,10 @@
         <span class="navbar-brand mb-0 h1"><i class="bi bi-shield-lock"></i> TIBA Admin</span>
         <div class="d-flex align-items-center">
             <span class="admin-avatar"><i class="bi bi-person"></i></span>
-            <a href="{{ route('admin.logout') }}" class="btn btn-outline-light btn-sm"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn btn-outline-light btn-sm"><i class="bi bi-box-arrow-right"></i> Logout</button>
+            </form>
         </div>
     </div>
 </nav>

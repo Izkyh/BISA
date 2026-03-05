@@ -10,7 +10,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Ambil 3 artikel terbaru (tanpa filter)
         $latestArticles = Article::orderBy('created_at', 'desc')
             ->take(3)
             ->get();

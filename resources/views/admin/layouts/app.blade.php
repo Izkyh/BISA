@@ -614,10 +614,13 @@
         <div class="nav-user">
             <div class="nav-avatar">{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}</div>
             <span class="nav-user-name d-none d-md-inline">{{ auth()->user()->name ?? 'Admin' }}</span>
-            <a href="{{ route('admin.logout') }}" class="btn-logout">
-                <i class="bi bi-box-arrow-right"></i>
-                <span class="d-none d-sm-inline">Logout</span>
-            </a>
+            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn-logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span class="d-none d-sm-inline">Logout</span>
+                </button>
+            </form>
         </div>
     </header>
 

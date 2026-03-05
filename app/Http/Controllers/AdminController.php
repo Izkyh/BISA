@@ -14,7 +14,6 @@ class AdminController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        // Batasi hanya user admin yang bisa login
         if ($credentials['email'] !== 'admin@tibasurabaya.com') {
             return back()->withErrors(['email' => 'Hanya admin yang bisa login']);
         }

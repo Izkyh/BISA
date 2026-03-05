@@ -23,8 +23,8 @@ class EventController extends Controller
     {
         $request->validate([
             'title'      => 'required|string|max:255',
-            'category'   => 'required|in:umum,kelas,seminar', // ✅ fix: sesuai model
-            'event_date' => 'required|date',                  // ✅ fix: date → event_date
+            'category'   => 'required|in:umum,kelas,seminar',
+            'event_date' => 'required|date',                  
             'start_time' => 'required',
             'end_time'   => 'required',
             'location'   => 'required|string|max:255',

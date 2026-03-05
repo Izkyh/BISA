@@ -72,7 +72,6 @@ class BoardMemberController extends Controller
 
         $data = $request->except('photo_path');
 
-        // ✅ fix: edit sekarang bisa update foto
         if ($request->hasFile('photo_path')) {
             if ($boardMember->photo_path) {
                 Storage::delete('public/' . $boardMember->photo_path);

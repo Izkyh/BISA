@@ -22,7 +22,7 @@ class VideoController extends Controller
     {
         $request->validate([
             'title'       => 'required|string|max:255',
-            'youtube_url' => 'required|url', // ✅ fix: url → youtube_url
+            'youtube_url' => 'required|url',
         ]);
         Video::create($request->only('title', 'youtube_url'));
         return redirect()->route('admin.videos.index')
@@ -38,7 +38,7 @@ class VideoController extends Controller
     {
         $request->validate([
             'title'       => 'required|string|max:255',
-            'youtube_url' => 'required|url', // ✅ fix: url → youtube_url
+            'youtube_url' => 'required|url',
         ]);
         $video->update($request->only('title', 'youtube_url'));
         return redirect()->route('admin.videos.index')
