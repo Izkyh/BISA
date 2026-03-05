@@ -6,41 +6,65 @@
     <h1 class="section-title with-border">Kegiatan <span>Komunitas</span></h1>
     <p class="section-description">Ikuti berbagai kegiatan TIBA Surabaya — kelas BISINDO, seminar aksesibilitas, dan acara komunitas lainnya.</p>
 
-    {{-- Search Bar --}}
-    <div class="video-search-bar mb-4">
-        <div class="input-group">
-            <input type="text"
-                   id="eventSearchInput"
-                   class="form-control"
-                   placeholder="Cari kegiatan berdasarkan judul atau lokasi...">
-            <button class="btn" type="button" id="eventSearchBtn">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-        <div id="eventSearchInfo" class="search-info mt-2" style="display:none;">
-            <small class="d-flex align-items-center justify-content-between w-100 gap-2">
-                <span id="eventSearchInfoText"></span>
-                <button type="button" id="eventClearSearch" class="clear-search">
-                    <i class="fas fa-times"></i> Reset
-                </button>
-            </small>
-        </div>
-    </div>
+    {{-- Search Bar — sekarang submit ke server --}}
+    <form method="GET" action="{{ route('events.index') }}" class="mb-4" id="eventSearchForm">
+        {{-- Pertahankan filter kategori aktif saat search --}}
+        @if(request('kategori'))
+            <input type="hidden" name="kategori" value="{{ request('kategori') }}">
+        @endif
 
-    {{-- Filter Kategori --}}
+        <div class="video-search-bar">
+            <div class="input-group">
+                <input type="text"
+                       name="search"
+                       id="eventSearchInput"
+                       class="form-control"
+                       value="{{ request('search') }}"
+                       placeholder="Cari kegiatan berdasarkan judul atau lokasi...">
+                <button class="btn" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        {{-- Info hasil search --}}
+        @if(request('search'))
+            <div class="search-info mt-2">
+                <small class="d-flex align-items-center justify-content-between w-100 gap-2">
+                    <span>{{ $events->total() }} kegiatan ditemukan untuk "{{ request('search') }}"</span>
+                    <a href="{{ route('events.index', array_filter(['kategori' => request('kategori')])) }}"
+                       class="clear-search">
+                        <i class="fas fa-times"></i> Reset
+                    </a>
+                </small>
+            </div>
+        @endif
+    </form>
+
+    {{-- Filter Kategori — sekarang pakai link URL --}}
     <div class="filter-tabs mb-4">
-        <button class="filter-btn active" data-category="all">Semua</button>
-        <button class="filter-btn" data-category="umum">Umum</button>
-        <button class="filter-btn" data-category="kelas">Kelas</button>
-        <button class="filter-btn" data-category="seminar">Seminar</button>
+        <a href="{{ route('events.index', array_filter(['search' => request('search')])) }}"
+           class="filter-btn {{ !request('kategori') ? 'active' : '' }}">
+            Semua
+        </a>
+        <a href="{{ route('events.index', array_filter(['kategori' => 'umum', 'search' => request('search')])) }}"
+           class="filter-btn {{ request('kategori') == 'umum' ? 'active' : '' }}">
+            Umum
+        </a>
+        <a href="{{ route('events.index', array_filter(['kategori' => 'kelas', 'search' => request('search')])) }}"
+           class="filter-btn {{ request('kategori') == 'kelas' ? 'active' : '' }}">
+            Kelas
+        </a>
+        <a href="{{ route('events.index', array_filter(['kategori' => 'seminar', 'search' => request('search')])) }}"
+           class="filter-btn {{ request('kategori') == 'seminar' ? 'active' : '' }}">
+            Seminar
+        </a>
     </div>
 
     {{-- Event List --}}
     <div class="d-flex flex-column gap-4" id="eventList">
         @forelse($events as $event)
-            <div class="event-card"
-                 data-title="{{ strtolower($event->title) }} {{ strtolower($event->location ?? '') }}"
-                 data-category="{{ $event->category }}">
+            <div class="event-card">
 
                 <div class="event-card-image">
                     @if($event->image_path)
@@ -115,18 +139,18 @@
         @empty
             <div class="empty-state">
                 <i class="fa-regular fa-calendar-xmark"></i>
-                <p>Belum ada kegiatan yang tersedia.</p>
+                <p>
+                    @if(request('search') || request('kategori'))
+                        Tidak ada kegiatan yang cocok dengan filter ini.
+                    @else
+                        Belum ada kegiatan yang tersedia.
+                    @endif
+                </p>
             </div>
         @endforelse
-
-        {{-- No result state --}}
-        <div id="eventNoResult" class="empty-state" style="display:none;">
-            <i class="fa-solid fa-search"></i>
-            <p>Tidak ada kegiatan yang cocok dengan pencarian.</p>
-        </div>
     </div>
 
-    {{-- Pagination --}}
+    {{-- Pagination — otomatis akurat karena server-side --}}
     @if($events->hasPages())
         <nav class="mt-4">
             {{ $events->links('vendor.pagination.events') }}
@@ -134,88 +158,3 @@
     @endif
 
 @endsection
-
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const searchInput  = document.getElementById('eventSearchInput');
-    const clearBtn     = document.getElementById('eventClearSearch');
-    const searchInfo   = document.getElementById('eventSearchInfo');
-    const searchInfoTxt = document.getElementById('eventSearchInfoText');
-    const noResult     = document.getElementById('eventNoResult');
-    const filterBtns   = document.querySelectorAll('.filter-btn[data-category]');
-
-    let currentCategory = 'all';
-    let currentTerm     = '';
-
-    function applyFilters() {
-        const cards = document.querySelectorAll('#eventList .event-card');
-        let visible = 0;
-
-        cards.forEach(function (card) {
-            const title    = card.getAttribute('data-title') || '';
-            const category = card.getAttribute('data-category') || '';
-
-            const matchSearch   = currentTerm === '' || title.includes(currentTerm);
-            const matchCategory = currentCategory === 'all' || category === currentCategory;
-
-            if (matchSearch && matchCategory) {
-                card.style.display = 'flex';
-                visible++;
-            } else {
-                card.style.display = 'none';
-            }
-        });
-
-        // No result state
-        if (noResult) {
-            noResult.style.display = visible === 0 ? 'block' : 'none';
-        }
-
-        // Search info
-        if (currentTerm) {
-            searchInfoTxt.textContent = visible + ' kegiatan ditemukan untuk "' + currentTerm + '"';
-            searchInfo.style.display  = 'block';
-        } else {
-            searchInfo.style.display  = 'none';
-        }
-    }
-
-    // Search input
-    if (searchInput) {
-        searchInput.addEventListener('input', function () {
-            currentTerm = this.value.toLowerCase().trim();
-            applyFilters();
-        });
-
-        searchInput.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                this.value  = '';
-                currentTerm = '';
-                applyFilters();
-            }
-        });
-    }
-
-    // Clear button
-    if (clearBtn) {
-        clearBtn.addEventListener('click', function () {
-            if (searchInput) searchInput.value = '';
-            currentTerm = '';
-            applyFilters();
-            if (searchInput) searchInput.focus();
-        });
-    }
-
-    // Category filter buttons
-    filterBtns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            currentCategory = this.getAttribute('data-category');
-            applyFilters();
-        });
-    });
-});
-</script>
-@endpush
