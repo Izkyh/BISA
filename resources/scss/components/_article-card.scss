@@ -1,8 +1,6 @@
 // ============================================
-// ARTICLE CARD COMPONENT — News Portal Style
+//          ARTICLE CARD COMPONENT
 // ============================================
-
-// === News Card (Grid, image atas) ===
 .news-card-link {
     text-decoration: none;
     color: inherit;
@@ -16,7 +14,9 @@
     overflow: hidden;
     box-shadow: var(--shadow-sm);
     border: 1px solid #f0f0f0;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -27,7 +27,6 @@
         border-color: var(--primary-color);
     }
 
-    // ── Gambar ────────────────────────────────────────────────────
     .news-card-img {
         position: relative;
         width: 100%;
@@ -65,7 +64,6 @@
         transform: scale(1.05);
     }
 
-    // ── Body ──────────────────────────────────────────────────────
     .news-card-body {
         padding: 16px 20px 18px;
         display: flex;
@@ -130,7 +128,6 @@
     }
 }
 
-// === Artikel Eksternal (RSS) Card ===
 .news-card.external {
     border-left: 3px solid #e5e7eb;
 
@@ -144,7 +141,6 @@
     }
 }
 
-// === Section Divider Berita Nasional ===
 .section-divider {
     display: flex;
     align-items: center;
@@ -210,7 +206,6 @@
     }
 }
 
-// === Empty State ===
 .empty-state {
     text-align: center;
     padding: 3rem 1rem;
@@ -229,7 +224,6 @@
     }
 }
 
-// === Responsive ===
 @media (max-width: $breakpoint-md) {
     .news-card {
         .news-card-body {

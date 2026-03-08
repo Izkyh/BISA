@@ -1,77 +1,171 @@
+// ============================================
+// ARTIKEL SECTION - Homepage & Artikel Page
+// ============================================
+
 .artikel-section {
     background-color: var(--light-bg-color);
 }
 
-.artikel-card {
+// Label kecil di atas judul section
+.artikel-label {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    background: rgba(var(--primary-color-rgb, 13, 110, 253), 0.1);
+    padding: 5px 16px;
+    border-radius: 100px;
+}
+
+.ac {
     background: var(--white-color);
     border-radius: var(--border-radius-md);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
+    transition:
+        transform 0.32s ease,
+        box-shadow 0.32s ease;
     display: flex;
-    align-items: center;
-    padding: 20px;
-    margin-bottom: 25px;
-    border-left: 5px solid var(--primary-color);
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
 
     &:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    }
-
-    img {
-        width: 180px;
-        height: 120px;
-        border-radius: 8px;
-        object-fit: cover;
-        margin-right: 25px;
-    }
-
-    .card-body {
-        padding: 25px;
-    }
-
-    .card-category {
-        display: inline-block;
-        background-color: #fde8a0;
-        color: #9c6f00;
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 5px 12px;
-        border-radius: 50px;
-        margin-bottom: 12px;
-    }
-
-    .card-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin-bottom: 12px;
-        color: var(--dark-color);
-    }
-
-    .card-text {
-        font-size: 0.9rem;
-        color: #555;
-        margin-bottom: 20px;
-    }
-
-    .card-meta {
-        font-size: 0.8rem;
-        color: #888;
+        transform: translateY(-7px);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.13);
+        color: inherit;
+        text-decoration: none;
     }
 }
 
-@media (max-width: 992px) {
-    .artikel-card {
-        flex-direction: column;
-        align-items: flex-start;
+.ac__img-wrap {
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
 
-        img {
-            width: 100%;
-            height: 200px;
-            margin-right: 0;
-            margin-bottom: 20px;
-        }
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.45s ease;
+    }
+}
+
+.ac--featured .ac__img-wrap {
+    aspect-ratio: 16 / 9;
+}
+
+.ac--side .ac__img-wrap {
+    aspect-ratio: 16 / 7;
+}
+
+.ac:hover .ac__img-wrap img {
+    transform: scale(1.06);
+}
+
+// Gradient overlay di featured card
+.ac__img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        transparent 50%,
+        rgba(0, 0, 0, 0.18) 100%
+    );
+    pointer-events: none;
+}
+
+.ac__badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: var(--primary-color);
+    color: var(--white-color);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 4px 13px;
+    border-radius: 100px;
+    z-index: 1;
+}
+
+.ac__body {
+    padding: 20px 22px 18px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.ac--featured .ac__title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--dark-color);
+    margin-bottom: 10px;
+}
+
+.ac--side .ac__title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--dark-color);
+    margin-bottom: 6px;
+}
+
+.ac__excerpt {
+    font-size: 0.85rem;
+    color: #6c757d;
+    line-height: 1.65;
+    margin-bottom: 16px;
+    flex: 1;
+}
+
+.ac__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 13px;
+    border-top: 1px solid #f0f0f0;
+    margin-top: auto;
+}
+
+.ac__date {
+    font-size: 0.76rem;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.ac__cta {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: gap 0.2s ease;
+}
+
+.ac:hover .ac__cta {
+    gap: 9px;
+}
+
+@media (max-width: $breakpoint-md) {
+    .ac--featured .ac__img-wrap {
+        aspect-ratio: 16 / 8;
+    }
+
+    .ac--featured .ac__title {
+        font-size: 1.05rem;
+    }
+
+    // Di mobile, side cards jadi full width
+    .ac--side .ac__img-wrap {
+        aspect-ratio: 16 / 6;
     }
 }

@@ -25,10 +25,8 @@ class Article extends Model
     protected static function booted(): void
     {
         static::creating(function ($article) {
-            // Generate slug dari title
             $article->slug = Str::slug($article->title);
 
-            // Pastikan slug unik dengan menambahkan suffix jika duplikat
             $originalSlug = $article->slug;
             $counter = 1;
 
@@ -38,7 +36,6 @@ class Article extends Model
             }
         });
 
-        // Update slug jika title berubah (optional)
         static::updating(function ($article) {
             if ($article->isDirty('title') && !$article->isDirty('slug')) {
                 $article->slug = Str::slug($article->title);

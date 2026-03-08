@@ -16,7 +16,7 @@
         position: absolute;
         inset: 0;
         z-index: 0;
-        overflow: hidden; // ✅ penting
+        overflow: hidden;
     }
 
     .hero-slide {
@@ -41,7 +41,6 @@
         }
     }
 
-    // ── Gradient overlay ───────────────────────────────────────────
     .hero-overlay {
         position: absolute;
         inset: 0;
@@ -54,7 +53,6 @@
         z-index: 1;
     }
 
-    // ── Text content ───────────────────────────────────────────────
     .hero-text {
         position: relative;
         z-index: 2;
@@ -84,7 +82,6 @@
         }
     }
 
-    // ── Dot indicators ─────────────────────────────────────────────
     .hero-dots {
         position: absolute;
         bottom: 32px;
@@ -116,7 +113,6 @@
         }
     }
 
-    // ── Arrow buttons ──────────────────────────────────────────────
     .hero-arrow {
         position: absolute;
         top: 50%;
@@ -151,7 +147,6 @@
     }
 }
 
-// ── Animation ─────────────────────────────────────────────────────────
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -163,7 +158,6 @@
     }
 }
 
-// ── Responsive ────────────────────────────────────────────────────────
 @media (max-width: $breakpoint-lg) {
     .hero .hero-text h1 {
         font-size: 2.5rem;
@@ -201,6 +195,6 @@
         }
         .hero-arrow {
             display: none;
-        } // sembunyikan arrow di HP kecil
+        }
     }
 }

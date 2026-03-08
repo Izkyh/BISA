@@ -1,9 +1,10 @@
 // ============================================
-// LAYOUT - Base Structure
+//          LAYOUT - Base Structure
 // ============================================
 
 // Global HTML & Body
-html, body {
+html,
+body {
     background-color: #f5f5f5;
     min-height: 100vh;
     margin: 0;
@@ -11,7 +12,6 @@ html, body {
 }
 
 // Body spacing untuk fixed navbar
-// HANYA berlaku untuk halaman NON-home
 body:not(.home) {
     padding-top: var(--navbar-height);
 
@@ -20,12 +20,10 @@ body:not(.home) {
     }
 }
 
-// Khusus untuk landing page (no padding-top)
 body.home {
     padding-top: 0;
 }
 
-// Main Content Container
 .main-content {
     background-color: transparent;
     padding-top: 2rem;
@@ -49,7 +47,6 @@ body.home {
         color: var(--primary-color);
     }
 
-    // Variant dengan border
     &.with-border {
         border-left: 6px solid var(--primary-color);
         padding-left: 12px;
@@ -72,14 +69,12 @@ body.home {
     text-align: left;
 }
 
-// Container
 .container {
     @media (min-width: $breakpoint-xl) {
         max-width: $container-max-width;
     }
 }
 
-// Row spacing
 .row {
     --bs-gutter-x: 3rem;
 
@@ -88,7 +83,6 @@ body.home {
     }
 }
 
-// Responsive Adjustments
 @media (max-width: $breakpoint-lg) {
     .section-title {
         font-size: 2rem;

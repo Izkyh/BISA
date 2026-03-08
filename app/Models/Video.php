@@ -20,7 +20,6 @@ class Video extends Model
     {
         $url = $this->youtube_url;
 
-        // Pattern untuk berbagai format YouTube URL
         $patterns = [
             '/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/',
             '/youtube\.com\/embed\/([a-zA-Z0-9_-]+)/',

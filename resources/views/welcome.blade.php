@@ -190,52 +190,86 @@
     <section id="articles" class="artikel-section section-padding">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="section-title">Artikel & <span>Wawasan</span> Terbaru</h2>
+                <span class="artikel-label">Blog & Insights</span>
+                <h2 class="section-title mt-2">Artikel & <span>Wawasan</span> Terbaru</h2>
                 <p class="section-subtitle">Temukan informasi dan cerita inspiratif seputar dunia bahasa isyarat dan
                     aksesibilitas.</p>
             </div>
 
-            <div class="row g-4">
-                @forelse($latestArticles as $article)
-                    <div class="col-lg-4 col-md-6">
-                        <div class="artikel-card">
-                            @if ($article->image_path)
-                                <img src="{{ Storage::url($article->image_path) }}" alt="{{ $article->title }}">
-                            @else
-                                <img src="{{ asset('foto/placeholder.jpg') }}" alt="{{ $article->title }}">
-                            @endif
-                            <div class="card-body">
-                                <span class="card-category">Artikel</span>
-                                <h5 class="card-title">{{ Str::limit($article->title, 60) }}</h5>
-                                <p class="card-text">{{ Str::limit($article->excerpt, 100) }}</p>
-                                <p class="card-meta">
-                                    <i class="far fa-calendar-alt"></i> {{ $article->created_at->format('d M Y') }}
-                                </p>
-                                <a href="{{ route('articles.show', $article->slug) }}"
-                                    class="btn btn-sm btn-outline-primary">
-                                    Baca Selengkapnya
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <div class="col-12">
-                        <div class="text-center py-5">
-                            <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
-                            <p class="text-muted mb-0">Belum ada artikel yang tersedia.</p>
-                            <small class="text-muted">Nantikan artikel menarik dari kami!</small>
-                        </div>
-                    </div>
-                @endforelse
-            </div>
-
             @if ($latestArticles->count() > 0)
+                @php
+                    $featured = $latestArticles->first();
+                    $rest = $latestArticles->skip(1);
+                @endphp
+
+                <div class="row g-4 align-items-stretch">
+
+                    {{-- ── Featured Card (kiri, besar) ── --}}
+                    <div class="col-lg-7">
+                        <a href="{{ route('articles.show', $featured->slug) }}"
+                            class="ac ac--featured h-100 d-flex flex-column text-decoration-none">
+                            <div class="ac__img-wrap">
+                                <img src="{{ $featured->image_path ? Storage::url($featured->image_path) : asset('foto/placeholder.jpg') }}"
+                                    alt="{{ $featured->title }}">
+                                <span class="ac__badge">Artikel</span>
+                                <div class="ac__img-overlay"></div>
+                            </div>
+                            <div class="ac__body flex-fill d-flex flex-column">
+                                <h3 class="ac__title">{{ Str::limit($featured->title, 90) }}</h3>
+                                <p class="ac__excerpt flex-fill">{{ Str::limit($featured->excerpt, 160) }}</p>
+                                <div class="ac__footer">
+                                    <span class="ac__date">
+                                        <i class="far fa-calendar-alt"></i>
+                                        {{ $featured->created_at->format('d M Y') }}
+                                    </span>
+                                    <span class="ac__cta">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    {{-- ── Side Cards (kanan, 2 card kecil) ── --}}
+                    <div class="col-lg-5 d-flex flex-column gap-4">
+                        @forelse ($rest as $article)
+                            <a href="{{ route('articles.show', $article->slug) }}"
+                                class="ac ac--side flex-fill text-decoration-none">
+                                <div class="ac__img-wrap">
+                                    <img src="{{ $article->image_path ? Storage::url($article->image_path) : asset('foto/placeholder.jpg') }}"
+                                        alt="{{ $article->title }}">
+                                    <span class="ac__badge">Artikel</span>
+                                </div>
+                                <div class="ac__body">
+                                    <h5 class="ac__title">{{ Str::limit($article->title, 65) }}</h5>
+                                    <p class="ac__excerpt">{{ Str::limit($article->excerpt, 90) }}</p>
+                                    <div class="ac__footer">
+                                        <span class="ac__date">
+                                            <i class="far fa-calendar-alt"></i>
+                                            {{ $article->created_at->format('d M Y') }}
+                                        </span>
+                                        <span class="ac__cta">Baca <i class="fas fa-arrow-right"></i></span>
+                                    </div>
+                                </div>
+                            </a>
+                        @empty
+                        @endforelse
+                    </div>
+                </div>
+
                 <div class="text-center mt-5">
-                    <a href="{{ route('articles.index') }}" class="btn btn-primary">Lihat Semua Artikel</a>
+                    <a href="{{ route('articles.index') }}" class="btn btn-primary px-4">
+                        Lihat Semua Artikel <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            @else
+                <div class="text-center py-5">
+                    <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
+                    <p class="text-muted mb-0">Belum ada artikel yang tersedia.</p>
+                    <small class="text-muted">Nantikan artikel menarik dari kami!</small>
                 </div>
             @endif
         </div>
     </section>
+
     @push('scripts')
         <script>
             // ── Hero Slideshow ─────────────────────────────────────────────────────

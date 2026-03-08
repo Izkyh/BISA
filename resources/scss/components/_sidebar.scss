@@ -1,5 +1,5 @@
 // ============================================
-// SIDEBAR COMPONENT
+//              SIDEBAR COMPONENT
 // ============================================
 
 .sidebar {
@@ -7,7 +7,6 @@
     flex-direction: column;
     gap: 24px;
 
-    // ── Box wrapper ───────────────────────────────────────────────
     .sidebar-box {
         background: var(--white-color);
         border-radius: 14px;
@@ -21,7 +20,6 @@
         }
     }
 
-    // ── Header / Title ────────────────────────────────────────────
     h6 {
         display: flex;
         align-items: center;
@@ -37,7 +35,7 @@
         border-bottom: 1px solid #efefef;
 
         &::before {
-            content: '';
+            content: "";
             display: inline-block;
             width: 4px;
             height: 16px;
@@ -52,7 +50,6 @@
         }
     }
 
-    // ── Search ────────────────────────────────────────────────────
     .sidebar-search {
         padding: 14px 20px 12px;
         border-bottom: 1px solid #f5f5f5;
@@ -78,7 +75,10 @@
                 box-shadow: none;
             }
 
-            &::placeholder { color: #c0c8d4; font-size: 0.83rem; }
+            &::placeholder {
+                color: #c0c8d4;
+                font-size: 0.83rem;
+            }
         }
 
         .btn {
@@ -96,7 +96,9 @@
                 color: var(--dark-color);
             }
 
-            i { font-size: 0.85rem; }
+            i {
+                font-size: 0.85rem;
+            }
         }
     }
 
@@ -133,10 +135,11 @@
         gap: 3px;
         transition: color 0.2s;
 
-        &:hover { color: var(--dark-color); }
+        &:hover {
+            color: var(--dark-color);
+        }
     }
 
-    // ── List ──────────────────────────────────────────────────────
     .sidebar-list {
         display: flex;
         flex-direction: column;
@@ -153,10 +156,14 @@
         border-bottom: 1px solid #f5f5f5;
         transition: all 0.15s ease;
 
-        &:last-child  { border-bottom: none; padding-bottom: 6px; }
-        &:first-child { padding-top: 8px; }
+        &:last-child {
+            border-bottom: none;
+            padding-bottom: 6px;
+        }
+        &:first-child {
+            padding-top: 8px;
+        }
 
-        // ── Thumbnail ─────────────────────────────────────────────
         .sidebar-thumb {
             position: relative;
             width: 64px;
@@ -174,7 +181,6 @@
                 transition: transform 0.3s ease;
             }
 
-            // ── Placeholder (tanpa gambar) ──────────────────────
             .sidebar-thumb-placeholder {
                 width: 100%;
                 height: 100%;
@@ -189,19 +195,32 @@
                     color: #d1d5db;
                 }
 
-                // ✅ Warna placeholder per kategori event
-                &.cat-umum    { background: #eff6ff; i { color: #93c5fd; } }
-                &.cat-kelas   { background: #fffbeb; i { color: #fcd34d; } }
-                &.cat-seminar { background: #f0fdf4; i { color: #86efac; } }
+                &.cat-umum {
+                    background: #eff6ff;
+                    i {
+                        color: #93c5fd;
+                    }
+                }
+                &.cat-kelas {
+                    background: #fffbeb;
+                    i {
+                        color: #fcd34d;
+                    }
+                }
+                &.cat-seminar {
+                    background: #f0fdf4;
+                    i {
+                        color: #86efac;
+                    }
+                }
             }
 
-            // ── Date badge overlay (hanya untuk event) ──────────
             .sidebar-thumb-date {
                 position: absolute;
                 bottom: 0;
                 left: 0;
                 right: 0;
-                background: linear-gradient(transparent, rgba(0,0,0,0.72));
+                background: linear-gradient(transparent, rgba(0, 0, 0, 0.72));
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -219,7 +238,7 @@
                 .month {
                     font-size: 0.6rem;
                     font-weight: 600;
-                    color: rgba(255,255,255,0.85);
+                    color: rgba(255, 255, 255, 0.85);
                     text-transform: uppercase;
                     letter-spacing: 0.05em;
                     line-height: 1.2;
@@ -227,13 +246,11 @@
             }
         }
 
-        // ✅ Zoom thumbnail saat item di-hover
         &:hover .sidebar-thumb img,
         &:hover .sidebar-thumb .sidebar-thumb-placeholder {
             transform: scale(1.06);
         }
 
-        // ── Content area ──────────────────────────────────────────
         .sidebar-item-content {
             flex: 1;
             min-width: 0;
@@ -245,7 +262,9 @@
         a {
             text-decoration: none;
 
-            &:hover strong { color: var(--primary-color); }
+            &:hover strong {
+                color: var(--primary-color);
+            }
         }
 
         strong {
@@ -275,7 +294,6 @@
             }
         }
 
-        // ── Badge row ─────────────────────────────────────────────
         .sidebar-badges {
             display: flex;
             align-items: center;
@@ -291,9 +309,18 @@
             border-radius: 20px;
             line-height: 1.4;
 
-            &.badge-umum    { background: #eff6ff; color: #3b82f6; }
-            &.badge-kelas   { background: #fffbeb; color: #d97706; }
-            &.badge-seminar { background: #f0fdf4; color: #16a34a; }
+            &.badge-umum {
+                background: #eff6ff;
+                color: #3b82f6;
+            }
+            &.badge-kelas {
+                background: #fffbeb;
+                color: #d97706;
+            }
+            &.badge-seminar {
+                background: #f0fdf4;
+                color: #16a34a;
+            }
         }
 
         .badge-soon {
@@ -307,7 +334,6 @@
             line-height: 1.4;
         }
 
-        // ── Empty / No result state ───────────────────────────────
         &.sidebar-empty,
         &.no-result-message {
             justify-content: flex-start;
@@ -318,12 +344,16 @@
             color: #b0b8c4;
             font-size: 0.855rem;
 
-            i    { font-size: 1.2rem; opacity: 0.45; }
-            span { color: #b0b8c4; }
+            i {
+                font-size: 1.2rem;
+                opacity: 0.45;
+            }
+            span {
+                color: #b0b8c4;
+            }
         }
     }
 
-    // ── View All Button ───────────────────────────────────────────
     .view-all-btn {
         display: flex;
         align-items: center;
@@ -341,7 +371,7 @@
         transition: all 0.25s ease;
 
         &::after {
-            content: '→';
+            content: "→";
             font-size: 0.9rem;
             transition: transform 0.2s ease;
         }
@@ -351,12 +381,13 @@
             color: var(--dark-color);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
-            &::after { transform: translateX(4px); }
+            &::after {
+                transform: translateX(4px);
+            }
         }
     }
 }
 
-// ── Responsive ────────────────────────────────────────────────────────
 @media (max-width: $breakpoint-md) {
     .sidebar {
         gap: 20px;

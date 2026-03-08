@@ -1,5 +1,5 @@
 // ============================================
-// EVENT CARD COMPONENT
+//              EVENT CARD COMPONENT
 // ============================================
 
 .event-card {
@@ -9,7 +9,9 @@
     overflow: hidden;
     box-shadow: var(--shadow-sm);
     border: 1px solid #eee;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
     min-height: 220px;
 
     &:hover {
@@ -117,7 +119,6 @@
     }
 }
 
-// Responsive
 @media (max-width: $breakpoint-lg) {
     .event-card {
         flex-direction: column;

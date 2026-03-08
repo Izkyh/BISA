@@ -1,5 +1,5 @@
 // ============================================
-// FOOTER COMPONENT
+//              FOOTER COMPONENT
 // ============================================
 
 .footer {
@@ -27,7 +27,8 @@
             font-size: 1.25rem;
         }
 
-        p, a {
+        p,
+        a {
             color: rgba(255, 255, 255, 0.8);
             line-height: 1.8;
             margin-bottom: 10px;
@@ -76,7 +77,6 @@
     }
 }
 
-// Responsive
 @media (max-width: $breakpoint-lg) {
     .footer {
         .footer-content {

@@ -7,7 +7,6 @@
     margin-bottom: 2rem;
 }
 
-// ── Video Search Bar ──────────────────────────────────────────────────
 .video-search-bar {
     margin-bottom: 1.5rem;
 
@@ -17,12 +16,14 @@
         .form-control {
             border-radius: 10px 0 0 10px;
             border: 1px solid #d1d5db;
-            padding: .75rem 1rem;
-            transition: box-shadow .2s ease, border-color .2s ease;
+            padding: 0.75rem 1rem;
+            transition:
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
 
             &:focus {
                 border-color: var(--primary-color);
-                box-shadow: 0 0 0 .25rem rgba(253, 197, 0, .25);
+                box-shadow: 0 0 0 0.25rem rgba(253, 197, 0, 0.25);
                 outline: none;
             }
         }
@@ -32,8 +33,8 @@
             border: 1px solid #d1d5db;
             background: #fff;
             color: #6b7280;
-            padding: .75rem 1.25rem;
-            transition: all .2s ease;
+            padding: 0.75rem 1.25rem;
+            transition: all 0.2s ease;
 
             &:hover {
                 background: var(--primary-color);
@@ -44,7 +45,6 @@
     }
 }
 
-// ── Featured Video ────────────────────────────────────────────────────
 .featured-video-wrapper {
     position: relative;
     width: 100%;
@@ -78,10 +78,11 @@
     letter-spacing: 0.05em;
     margin-bottom: 8px;
 
-    i { font-size: 0.7rem; }
+    i {
+        font-size: 0.7rem;
+    }
 }
 
-// ── YouTube Lazy Thumbnail ─────────────────────────────────────────────
 .yt-thumb-wrapper {
     position: relative;
     width: 100%;
@@ -89,14 +90,16 @@
     cursor: pointer;
     overflow: hidden;
     background: #000;
-    border-radius: 0; // radius dari parent .video-card
+    border-radius: 0;
 
     img.yt-thumb-img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         display: block;
-        transition: opacity .3s ease, transform .4s ease;
+        transition:
+            opacity 0.3s ease,
+            transform 0.4s ease;
         opacity: 0.88;
     }
 
@@ -105,7 +108,6 @@
         transform: scale(1.04);
     }
 
-    // Play button overlay
     .yt-play-btn {
         position: absolute;
         top: 50%;
@@ -121,19 +123,23 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background .25s ease, transform .25s ease;
-        pointer-events: none; // klik diteruskan ke wrapper
+        transition:
+            background 0.25s ease,
+            transform 0.25s ease;
+        pointer-events: none;
 
-        i { margin-left: 3px; } // optical center icon play
+        i {
+            margin-left: 3px;
+        }
 
         &::before {
-            content: '';
+            content: "";
             position: absolute;
             inset: -6px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.15);
             opacity: 0;
-            transition: opacity .25s ease;
+            transition: opacity 0.25s ease;
         }
     }
 
@@ -141,10 +147,11 @@
         background: #ff0000;
         transform: translate(-50%, -50%) scale(1.1);
 
-        &::before { opacity: 1; }
+        &::before {
+            opacity: 1;
+        }
     }
 
-    // Saat sudah diplay, iframe menggantikan thumb
     iframe.yt-iframe {
         position: absolute;
         inset: 0;
@@ -155,7 +162,6 @@
     }
 }
 
-// ── Video Card ─────────────────────────────────────────────────────────
 .video-card-col {
     display: block;
 }
@@ -165,7 +171,9 @@
     border-radius: var(--border-radius-md);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
-    transition: transform .3s ease, box-shadow .3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
     height: 100%;
     border: 1px solid #f0f0f0;
 
@@ -203,7 +211,7 @@
 
         p.video-desc {
             color: #6b7280;
-            font-size: .85rem;
+            font-size: 0.85rem;
             line-height: 1.55;
             margin: 0 0 10px;
             display: -webkit-box;
@@ -213,24 +221,24 @@
         }
 
         .video-meta {
-            font-size: .75rem;
+            font-size: 0.75rem;
             color: #9ca3af;
             display: flex;
             align-items: center;
             gap: 6px;
 
-            i { color: var(--primary-color); }
+            i {
+                color: var(--primary-color);
+            }
         }
     }
 }
 
-// ── Video List Grid ────────────────────────────────────────────────────
 .g-4 {
     --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 1.5rem;
 }
 
-// ── No Result / Empty ──────────────────────────────────────────────────
 #videoNoResult {
     display: none;
     text-align: center;
@@ -241,13 +249,15 @@
         font-size: 3rem;
         margin-bottom: 1rem;
         display: block;
-        opacity: .4;
+        opacity: 0.4;
     }
 
-    p { font-size: .95rem; margin: 0; }
+    p {
+        font-size: 0.95rem;
+        margin: 0;
+    }
 }
 
-// ── Responsive ────────────────────────────────────────────────────────
 @media (max-width: $breakpoint-md) {
     .video-search-bar .input-group {
         max-width: 100%;
@@ -256,7 +266,9 @@
     .video-card .video-card-content {
         padding: 14px 16px 16px;
 
-        h6 { font-size: .95rem; }
+        h6 {
+            font-size: 0.95rem;
+        }
     }
 
     .featured-video-wrapper {
