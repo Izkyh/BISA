@@ -183,3 +183,11 @@
         }
     }
 }
+
+@media (max-width: $breakpoint-sm) {
+    .article-container {
+        padding: 16px;
+
+        h1 { font-size: 1.4rem; }
+    }
+}

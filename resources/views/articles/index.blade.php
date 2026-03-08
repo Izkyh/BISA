@@ -15,18 +15,6 @@
            class="filter-btn {{ !request('kategori') ? 'active' : '' }}">
             Semua
         </a>
-        <a href="{{ route('articles.index', ['kategori' => 'edukasi']) }}"
-           class="filter-btn {{ request('kategori') == 'edukasi' ? 'active' : '' }}">
-            Edukasi
-        </a>
-        <a href="{{ route('articles.index', ['kategori' => 'kegiatan']) }}"
-           class="filter-btn {{ request('kategori') == 'kegiatan' ? 'active' : '' }}">
-            Kegiatan
-        </a>
-        <a href="{{ route('articles.index', ['kategori' => 'informasi']) }}"
-           class="filter-btn {{ request('kategori') == 'informasi' ? 'active' : '' }}">
-            Informasi
-        </a>
     </div>
 
     {{-- Grid Artikel --}}

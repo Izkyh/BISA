@@ -110,3 +110,19 @@ body.home {
         padding-top: 1rem;
     }
 }
+
+@media (max-width: $breakpoint-lg) {
+    .col-lg-8 > div {
+        margin-left: 0 !important;
+    }
+
+    .col-lg-8,
+    .col-lg-4 {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .col-lg-4 {
+        margin-top: 2rem;
+    }
+}

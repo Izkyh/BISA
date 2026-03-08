@@ -158,3 +158,20 @@
         }
     }
 }
+
+@media (max-width: $breakpoint-sm) {
+    .event-card {
+        .event-card-image {
+            height: 180px;
+        }
+
+        .event-card-content {
+            padding: 14px;
+
+            .card-actions .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+}

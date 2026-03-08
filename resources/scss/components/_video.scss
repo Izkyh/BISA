@@ -275,3 +275,9 @@
         margin-bottom: 2rem;
     }
 }
+
+@media (max-width: $breakpoint-md) {
+    .video-search-bar .input-group {
+        max-width: 100%;
+    }
+}

@@ -12,35 +12,7 @@
             tingkatkan inklusivitas melalui koleksi video pembelajaran kami.
         </p>
     </div>
-
-    {{-- ── Featured Video (video pertama / is_featured) ──────────── --}}
-    @php
-        $featured = $videos->firstWhere('is_featured', true) ?? $videos->first();
-        preg_match(
-            '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/',
-            $featured?->youtube_url ?? '',
-            $featuredMatch
-        );
-        $featuredId = $featuredMatch[1] ?? null;
-    @endphp
-
-    @if($featured && $featuredId)
-        <div class="mb-2">
-            <span class="featured-video-label">
-                <i class="fas fa-star"></i> Video Unggulan
-            </span>
-        </div>
-        <div class="featured-video-wrapper">
-            <iframe
-                src="https://www.youtube.com/embed/{{ $featuredId }}?rel=0"
-                title="{{ $featured->title }}"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-            </iframe>
-        </div>
-    @endif
-
+    
     {{-- ── Search Bar ──────────────────────────────────────────────── --}}
     <div class="video-search-bar">
         <div class="input-group">

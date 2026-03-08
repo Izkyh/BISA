@@ -218,3 +218,38 @@
         }
     }
 }
+
+// ============================================
+// MOBILE NAVBAR - Additional Fix
+// ============================================
+
+@media (max-width: $breakpoint-lg) {
+    .navbar {
+
+        .dropdown .dropdown-menu {
+            display: none !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+            pointer-events: auto !important;
+            transition: none !important;
+
+            &.show {
+                display: block !important;
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-sm) {
+    .navbar {
+        .navbar-brand img {
+            height: 38px;
+        }
+
+        .navbar-collapse {
+            max-height: 75vh;
+            overflow-y: auto;
+        }
+    }
+}
