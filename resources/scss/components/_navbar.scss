@@ -102,16 +102,20 @@
             border-radius: 8px;
             border: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin-top: 0.5rem;
+            // Hapus margin-top, pakai padding-top agar tidak ada gap fisik
+            margin-top: 0 !important;
             padding: 0.5rem 0;
             min-width: 200px;
 
-            // Animasi show/hide yang smooth
-            display: block !important;
+            // PENTING: Hapus display: block !important
+            // Animasi pakai opacity + visibility saja
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-20px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(-10px);
+            // Spesifikkan property yg dianimasikan, jangan pakai 'all'
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             pointer-events: none;
 
             &.show {
@@ -158,9 +162,19 @@
             }
         }
     }
+    
+.navbar-brand {
+    margin-left: -36px;
 }
 
-// Responsive
+}
+
+
+
+// ============================================
+// RESPONSIVE — TABLET & MOBILE
+// ============================================
+
 @media (max-width: $breakpoint-lg) {
     .navbar {
         background-color: rgba(26, 26, 26, 0.95);
@@ -180,19 +194,23 @@
 
         .dropdown {
             .dropdown-menu {
+                // Override animasi desktop untuk mobile — langsung show/hide
+                display: none;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
+                transition: none !important;
+                pointer-events: auto !important;
+
                 background-color: rgba(40, 40, 40, 0.95);
                 border: none;
                 box-shadow: none;
                 margin-left: 0;
                 margin-top: 0.5rem;
                 position: static !important;
-                transform: none !important;
 
-                // Override animasi untuk mobile
                 &.show {
                     display: block !important;
-                    opacity: 1;
-                    visibility: visible;
                 }
             }
 
@@ -215,28 +233,6 @@
 
         .navbar-brand img {
             height: 45px;
-        }
-    }
-}
-
-// ============================================
-// MOBILE NAVBAR - Additional Fix
-// ============================================
-
-@media (max-width: $breakpoint-lg) {
-    .navbar {
-
-        .dropdown .dropdown-menu {
-            display: none !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            transform: none !important;
-            pointer-events: auto !important;
-            transition: none !important;
-
-            &.show {
-                display: block !important;
-            }
         }
     }
 }

@@ -5,14 +5,32 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/css/app.css',
                 'resources/scss/app.scss',
                 'resources/js/app.js'
             ],
             refresh: true,
         }),
     ],
+    build: {
+        // Optimize build performance
+        cssCodeSplit: true,
+        minify: 'terser',
+        terserOptions: {
+            compress: {
+                drop_console: true,
+                drop_debugger: true,
+            },
+        },
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    'vendor': ['bootstrap'],
+                },
+            },
+        },
+    },
     css: {
+        devSourcemap: false,
         preprocessorOptions: {
             scss: {
                 api: 'modern-compiler',
@@ -25,5 +43,14 @@ export default defineConfig({
                 ]
             }
         }
-    }
+    },
+    // Enable faster HMR
+    server: {
+        hmr: {
+            overlay: false,
+        },
+        watch: {
+            usePolling: false,
+        },
+    },
 });
