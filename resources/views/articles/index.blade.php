@@ -26,7 +26,7 @@
                     <div class="news-card">
                         <div class="news-card-img">
                             <img
-                                src="{{ $article->image_path ? Storage::url($article->image_path) : asset('foto/placeholder.jpg') }}"
+                                src="{{ $article->image_path ? asset('images/' . $article->image_path) : asset('foto/placeholder.jpg') }}"
                                 alt="{{ $article->title }}"
                                 loading="lazy"
                                 onerror="this.src='{{ asset('foto/placeholder.jpg') }}'">

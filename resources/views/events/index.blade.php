@@ -68,7 +68,7 @@
 
                 <div class="event-card-image">
                     @if($event->image_path)
-                        <img src="{{ Storage::url($event->image_path) }}"
+                        <img src="{{ asset('images/' . $event->image_path) }}"
                              alt="{{ $event->title }}"
                              loading="lazy"
                              onerror="this.src='{{ asset('foto/placeholder.jpg') }}'">

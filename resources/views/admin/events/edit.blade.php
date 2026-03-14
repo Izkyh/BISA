@@ -81,7 +81,7 @@
                     <label class="form-label">Gambar Event</label>
                     @if($event->image_path)
                     <div class="mb-2">
-                        <img src="{{ asset('storage/' . $event->image_path) }}"
+                        <img src="{{ asset('images/' . $event->image_path) }}"
                              style="height:80px; border-radius:8px; border:1px solid var(--border);">
                         <small style="color:var(--muted); display:block; margin-top:4px;">Gambar saat ini</small>
                     </div>

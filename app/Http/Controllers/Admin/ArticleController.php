@@ -29,8 +29,10 @@ class ArticleController extends Controller
         $data = $request->except('image');
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('public/articles');
-            $data['image_path'] = str_replace('public/', '', $path);
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images/articles'), $filename);
+            $data['image_path'] = 'articles/' . $filename;
         }
 
         Article::create($data);
@@ -54,10 +56,15 @@ class ArticleController extends Controller
 
         if ($request->hasFile('image')) {
             if ($article->image_path) {
-                Storage::delete('public/' . $article->image_path);
+                $oldPath = public_path('images/' . $article->image_path);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
             }
-            $path = $request->file('image')->store('public/articles');
-            $data['image_path'] = str_replace('public/', '', $path);
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images/articles'), $filename);
+            $data['image_path'] = 'articles/' . $filename;
         }
 
         $article->update($data);
@@ -68,7 +75,10 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         if ($article->image_path) {
-            Storage::delete('public/' . $article->image_path);
+            $imagePath = public_path('images/' . $article->image_path);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
         }
         $article->delete();
         return redirect()->route('admin.articles.index')

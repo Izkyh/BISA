@@ -141,7 +141,7 @@
                         <div class="kegiatan-card">
                             <div class="kegiatan-image-placeholder">
                                 @if ($event->image_path)
-                                    <img src="{{ Storage::url($event->image_path) }}" alt="{{ $event->title }}"
+                                    <img src="{{ asset('images/' . $event->image_path) }}" alt="{{ $event->title }}"
                                         style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                                 @else
                                     <div class="d-flex align-items-center justify-content-center h-100 bg-light">
@@ -190,7 +190,6 @@
     <section id="articles" class="artikel-section section-padding">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="artikel-label">Blog & Insights</span>
                 <h2 class="section-title mt-2">Artikel & <span>Wawasan</span> Terbaru</h2>
                 <p class="section-subtitle">Temukan informasi dan cerita inspiratif seputar dunia bahasa isyarat dan
                     aksesibilitas.</p>
@@ -209,7 +208,7 @@
                         <a href="{{ route('articles.show', $featured->slug) }}"
                             class="ac ac--featured h-100 d-flex flex-column text-decoration-none">
                             <div class="ac__img-wrap">
-                                <img src="{{ $featured->image_path ? Storage::url($featured->image_path) : asset('foto/placeholder.jpg') }}"
+                                <img src="{{ $featured->image_path ? asset('images/' . $featured->image_path) : asset('foto/placeholder.jpg') }}"
                                     alt="{{ $featured->title }}">
                                 <span class="ac__badge">Artikel</span>
                                 <div class="ac__img-overlay"></div>
@@ -234,7 +233,7 @@
                             <a href="{{ route('articles.show', $article->slug) }}"
                                 class="ac ac--side flex-fill text-decoration-none">
                                 <div class="ac__img-wrap">
-                                    <img src="{{ $article->image_path ? Storage::url($article->image_path) : asset('foto/placeholder.jpg') }}"
+                                    <img src="{{ $article->image_path ? asset('images/' . $article->image_path) : asset('foto/placeholder.jpg') }}"
                                         alt="{{ $article->title }}">
                                     <span class="ac__badge">Artikel</span>
                                 </div>

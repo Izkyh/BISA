@@ -33,8 +33,10 @@ class EventController extends Controller
         $data = $request->except('image');
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('public/events');
-            $data['image_path'] = str_replace('public/', '', $path);
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images/events'), $filename);
+            $data['image_path'] = 'events/' . $filename;
         }
 
         Event::create($data);
@@ -61,9 +63,16 @@ class EventController extends Controller
         $data = $request->except('image');
 
         if ($request->hasFile('image')) {
-            if ($event->image_path) Storage::delete('public/' . $event->image_path);
-            $path = $request->file('image')->store('public/events');
-            $data['image_path'] = str_replace('public/', '', $path);
+            if ($event->image_path) {
+                $oldPath = public_path('images/' . $event->image_path);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images/events'), $filename);
+            $data['image_path'] = 'events/' . $filename;
         }
 
         $event->update($data);
@@ -73,7 +82,12 @@ class EventController extends Controller
 
     public function destroy(Event $event)
     {
-        if ($event->image_path) Storage::delete('public/' . $event->image_path);
+        if ($event->image_path) {
+            $imagePath = public_path('images/' . $event->image_path);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
         $event->delete();
         return redirect()->route('admin.events.index')
             ->with('success', 'Event berhasil dihapus');

@@ -43,8 +43,9 @@ class BoardMemberController extends Controller
         $data = $request->except('photo_path');
 
         if ($request->hasFile('photo_path')) {
-            $filename = time() . '_' . $request->file('photo_path')->getClientOriginalName();
-            $request->file('photo_path')->storeAs('public/board_members', $filename);
+            $file = $request->file('photo_path');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images/board_members'), $filename);
             $data['photo_path'] = 'board_members/' . $filename;
         }
 
@@ -74,10 +75,14 @@ class BoardMemberController extends Controller
 
         if ($request->hasFile('photo_path')) {
             if ($boardMember->photo_path) {
-                Storage::delete('public/' . $boardMember->photo_path);
+                $oldPath = public_path('images/' . $boardMember->photo_path);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
             }
-            $filename = time() . '_' . $request->file('photo_path')->getClientOriginalName();
-            $request->file('photo_path')->storeAs('public/board_members', $filename);
+            $file = $request->file('photo_path');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images/board_members'), $filename);
             $data['photo_path'] = 'board_members/' . $filename;
         }
 
@@ -91,7 +96,10 @@ class BoardMemberController extends Controller
     {
         $type = $boardMember->type;
         if ($boardMember->photo_path) {
-            Storage::delete('public/' . $boardMember->photo_path);
+            $photoPath = public_path('images/' . $boardMember->photo_path);
+            if (file_exists($photoPath)) {
+                unlink($photoPath);
+            }
         }
         $boardMember->delete();
         return redirect()

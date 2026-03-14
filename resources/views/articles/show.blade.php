@@ -7,7 +7,7 @@
         <h1>{{ $article->title }}</h1>
 
         @if($article->image_path)
-            <img src="{{ Storage::url($article->image_path) }}" alt="{{ $article->title }}">
+            <img src="{{ asset('images/' . $article->image_path) }}" alt="{{ $article->title }}">
         @endif
 
         <div id="article-content">

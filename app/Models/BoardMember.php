@@ -59,7 +59,7 @@ class BoardMember extends Model
     public function getPhotoUrlAttribute()
     {
         if ($this->photo_path) {
-            return asset('storage/' . $this->photo_path);
+            return asset('images/' . $this->photo_path);
         }
         return asset('foto/placeholder.jpg');
     }

@@ -33,7 +33,7 @@
                         {{-- ✅ Thumbnail artikel --}}
                         <div class="sidebar-thumb">
                             @if($article->image_path)
-                                <img src="{{ Storage::url($article->image_path) }}" alt="{{ $article->title }}">
+                                <img src="{{ asset('images/' . $article->image_path) }}" alt="{{ $article->title }}">
                             @else
                                 <div class="sidebar-thumb-placeholder">
                                     <i class="fas fa-newspaper"></i>
@@ -82,7 +82,7 @@
                         {{-- ✅ Thumbnail kegiatan --}}
                         <div class="sidebar-thumb">
                             @if($event->image_path)
-                                <img src="{{ Storage::url($event->image_path) }}" alt="{{ $event->title }}">
+                                <img src="{{ asset('images/' . $event->image_path) }}" alt="{{ $event->title }}">
                             @else
                                 {{-- Placeholder dengan warna per kategori --}}
                                 <div class="sidebar-thumb-placeholder cat-{{ $event->category }}">
