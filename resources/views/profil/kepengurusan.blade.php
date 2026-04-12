@@ -37,18 +37,6 @@
                                     <span class="value">{{ $member->gender ?? '-' }}</span>
                                 </li>
                                 <li>
-                                    <span class="label">Pekerjaan</span>
-                                    <span class="value">{{ $member->occupation ?? '-' }}</span>
-                                </li>
-                                <li>
-                                    <span class="label">Alamat</span>
-                                    <span class="value">{{ Str::limit($member->address ?? '-', 30) }}</span>
-                                </li>
-                                <li>
-                                    <span class="label">No. HP</span>
-                                    <span class="value">{{ $member->phone ?? '-' }}</span>
-                                </li>
-                                <li>
                                     <span class="label">Sosmed</span>
                                     <span class="value">{{ $member->social_media ?? '-' }}</span>
                                 </li>

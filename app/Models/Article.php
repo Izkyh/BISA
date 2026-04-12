@@ -16,7 +16,8 @@ class Article extends Model
         'slug',
         'excerpt',
         'body',
-        'image_path'
+        'image_path',
+        'views',
     ];
 
     /**

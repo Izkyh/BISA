@@ -4,7 +4,8 @@
 
 @section('content')
     <h1 class="section-title with-border">Kegiatan <span>Komunitas</span></h1>
-    <p class="section-description">Ikuti berbagai kegiatan TIBA Surabaya — kelas BISINDO, seminar aksesibilitas, dan acara komunitas lainnya.</p>
+    <p class="section-description">Ikuti berbagai kegiatan TIBA Surabaya — kelas BISINDO, seminar aksesibilitas, dan acara
+        komunitas lainnya.</p>
 
     {{-- Search Bar — sekarang submit ke server --}}
     <form method="GET" action="{{ route('events.index') }}" class="mb-4" id="eventSearchForm">
@@ -15,12 +16,8 @@
 
         <div class="video-search-bar">
             <div class="input-group">
-                <input type="text"
-                       name="search"
-                       id="eventSearchInput"
-                       class="form-control"
-                       value="{{ request('search') }}"
-                       placeholder="Cari kegiatan berdasarkan judul atau lokasi...">
+                <input type="text" name="search" id="eventSearchInput" class="form-control" value="{{ request('search') }}"
+                    placeholder="Cari kegiatan berdasarkan judul atau lokasi...">
                 <button class="btn" type="submit">
                     <i class="fas fa-search"></i>
                 </button>
@@ -33,7 +30,7 @@
                 <small class="d-flex align-items-center justify-content-between w-100 gap-2">
                     <span>{{ $events->total() }} kegiatan ditemukan untuk "{{ request('search') }}"</span>
                     <a href="{{ route('events.index', array_filter(['kategori' => request('kategori')])) }}"
-                       class="clear-search">
+                        class="clear-search">
                         <i class="fas fa-times"></i> Reset
                     </a>
                 </small>
@@ -44,19 +41,19 @@
     {{-- Filter Kategori — sekarang pakai link URL --}}
     <div class="filter-tabs mb-4">
         <a href="{{ route('events.index', array_filter(['search' => request('search')])) }}"
-           class="filter-btn {{ !request('kategori') ? 'active' : '' }}">
+            class="filter-btn {{ !request('kategori') ? 'active' : '' }}">
             Semua
         </a>
         <a href="{{ route('events.index', array_filter(['kategori' => 'umum', 'search' => request('search')])) }}"
-           class="filter-btn {{ request('kategori') == 'umum' ? 'active' : '' }}">
+            class="filter-btn {{ request('kategori') == 'umum' ? 'active' : '' }}">
             Umum
         </a>
         <a href="{{ route('events.index', array_filter(['kategori' => 'kelas', 'search' => request('search')])) }}"
-           class="filter-btn {{ request('kategori') == 'kelas' ? 'active' : '' }}">
+            class="filter-btn {{ request('kategori') == 'kelas' ? 'active' : '' }}">
             Kelas
         </a>
         <a href="{{ route('events.index', array_filter(['kategori' => 'seminar', 'search' => request('search')])) }}"
-           class="filter-btn {{ request('kategori') == 'seminar' ? 'active' : '' }}">
+            class="filter-btn {{ request('kategori') == 'seminar' ? 'active' : '' }}">
             Seminar
         </a>
     </div>
@@ -68,13 +65,10 @@
 
                 <div class="event-card-image">
                     @if($event->image_path)
-                        <img src="{{ asset('images/' . $event->image_path) }}"
-                             alt="{{ $event->title }}"
-                             loading="lazy"
-                             onerror="this.src='{{ asset('foto/placeholder.jpg') }}'">
+                        <img src="{{ asset('images/' . $event->image_path) }}" alt="{{ $event->title }}" loading="lazy"
+                            onerror="this.src='{{ asset('foto/placeholder.jpg') }}'">
                     @else
-                        <img src="{{ asset('foto/placeholder.jpg') }}"
-                             alt="{{ $event->title }}">
+                        <img src="{{ asset('foto/placeholder.jpg') }}" alt="{{ $event->title }}">
                     @endif
                 </div>
 
@@ -82,11 +76,11 @@
                     {{-- Badge Kategori --}}
                     <div class="mb-2">
                         <span class="badge
-                            @if($event->category == 'kelas') bg-warning text-dark
-                            @elseif($event->category == 'seminar') bg-success
-                            @else bg-primary
-                            @endif
-                            rounded-pill px-3 py-1" style="font-size:0.75rem; font-weight:600;">
+                                    @if($event->category == 'kelas') bg-warning text-dark
+                                    @elseif($event->category == 'seminar') bg-success
+                                    @else bg-primary
+                                    @endif
+                                    rounded-pill px-3 py-1" style="font-size:0.75rem; font-weight:600;">
                             {{ ucfirst($event->category ?? 'Umum') }}
                         </span>
                     </div>
@@ -118,12 +112,10 @@
                         </span>
                     </div>
 
-                    <div class="card-actions">
+                    <div class="card-actions d-flex flex-wrap gap-2">
                         @if($event->link)
-                            <a href="{{ $event->link }}"
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               class="btn btn-{{ $event->category == 'umum' ? 'blue' : ($event->category == 'seminar' ? 'green' : 'yellow') }}">
+                            <a href="{{ $event->link }}" target="_blank" rel="noopener noreferrer"
+                                class="btn btn-{{ $event->category == 'umum' ? 'blue' : ($event->category == 'seminar' ? 'green' : 'yellow') }}">
                                 @if($event->category == 'seminar')
                                     <i class="fa-solid fa-microphone-alt me-1"></i> Daftar Seminar
                                 @elseif($event->category == 'kelas')
@@ -131,6 +123,13 @@
                                 @else
                                     <i class="fa-solid fa-users me-1"></i> Gabung
                                 @endif
+                            </a>
+                        @endif
+
+                        @if($event->is_donation_enabled && $event->donation_link)
+                            <a href="{{ $event->donation_link }}" target="_blank" rel="noopener noreferrer"
+                                class="btn btn-outline-primary">
+                                <i class="fa-solid fa-hand-holding-heart me-1"></i> Donasi
                             </a>
                         @endif
                     </div>

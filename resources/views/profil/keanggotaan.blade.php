@@ -1,20 +1,20 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar Keanggotaan - TIBA Surabaya')
+@section('title', 'Daftar Guru Pengajar - TIBA Surabaya')
 
 @section('content')
     <div class="container main-content">
-        <h2 class="section-title">Daftar Keanggotaan</h2>
+        <h2 class="section-title">Daftar Guru Pengajar</h2>
 
         <div class="search-bar mb-4">
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-search"></i></span>
-                <input type="text" id="searchInput" class="form-control" placeholder="Cari nama anggota...">
+                <input type="text" id="searchInput" class="form-control" placeholder="Cari nama guru pengajar...">
             </div>
         </div>
 
         <div id="member-list" class="row g-4">
-            @forelse($members as $member)
+            @forelse($teachers as $member)
                 <div class="col-lg-4 col-md-6 member-col" data-name="{{ strtolower($member->name) }}">
                     <div class="member-card">
                         <div class="member-card-header">
@@ -60,16 +60,16 @@
                 <div class="col-12">
                     <div class="alert alert-info text-center">
                         <i class="fas fa-users fa-3x mb-3"></i>
-                        <p class="mb-0">Belum ada data keanggotaan.</p>
+                        <p class="mb-0">Belum ada data guru pengajar.</p>
                     </div>
                 </div>
             @endforelse
         </div>
 
         {{-- Pagination --}}
-        @if($members->hasPages())
+        @if($teachers->hasPages())
             <nav class="mt-4">
-                {{ $members->links('pagination::bootstrap-5') }}
+                {{ $teachers->links('pagination::bootstrap-5') }}
             </nav>
         @endif
     </div>

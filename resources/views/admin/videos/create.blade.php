@@ -29,6 +29,17 @@
                 @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 
+            <div class="mb-3">
+                <label class="form-label">Kategori <span style="color:var(--danger);">*</span></label>
+                <select name="category" class="form-select @error('category') is-invalid @enderror" required>
+                    <option value="">Pilih kategori</option>
+                    @foreach($categories as $value => $label)
+                        <option value="{{ $value }}" {{ old('category') === $value ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+                @error('category')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
             <div class="mb-4">
                 <label class="form-label">YouTube URL <span style="color:var(--danger);">*</span></label>
                 {{-- ✅ fix: name="youtube_url" --}}

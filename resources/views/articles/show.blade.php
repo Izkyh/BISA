@@ -6,6 +6,15 @@
     <div class="article-container">
         <h1>{{ $article->title }}</h1>
 
+        <div class="mb-3 text-muted d-flex align-items-center gap-3 flex-wrap">
+            <span><i class="fa-regular fa-calendar me-1"></i>{{ $article->created_at->format('d M Y H:i') }}</span>
+            <span title="Total Tayangan"><i class="fa-regular fa-eye me-1"></i>{{ number_format($article->views ?? 0) }} views</span>
+            <span class="text-success" title="Pembaca Aktif">
+                <i class="fa-solid fa-users me-1"></i>
+                <span id="active-viewers-count">1</span> sedang membaca
+            </span>
+        </div>
+
         @if($article->image_path)
             <img src="{{ asset('images/' . $article->image_path) }}" alt="{{ $article->title }}">
         @endif
@@ -43,16 +52,39 @@
     const copyLinkBtn = document.getElementById('copy-link-btn');
     const copyFeedback = document.getElementById('copy-feedback');
 
-    copyLinkBtn.addEventListener('click', (event) => {
-        event.preventDefault();
-        navigator.clipboard.writeText(window.location.href).then(() => {
-            copyFeedback.textContent = 'Tersalin!';
-            setTimeout(() => { copyFeedback.textContent = ''; }, 2000);
-        }).catch(err => {
-            console.error('Gagal menyalin tautan: ', err);
-            copyFeedback.textContent = 'Gagal!';
-            setTimeout(() => { copyFeedback.textContent = ''; }, 2000);
+    if (copyLinkBtn) {
+        copyLinkBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                copyFeedback.textContent = 'Tersalin!';
+                setTimeout(() => { copyFeedback.textContent = ''; }, 2000);
+            }).catch(err => {
+                console.error('Gagal menyalin tautan: ', err);
+                copyFeedback.textContent = 'Gagal!';
+                setTimeout(() => { copyFeedback.textContent = ''; }, 2000);
+            });
         });
+    }
+
+    // Active Viewers Polling Tracker
+    document.addEventListener('DOMContentLoaded', function() {
+        const pingUrl = "{{ route('articles.ping-viewer', $article->slug) }}";
+        const viewerCountElement = document.getElementById('active-viewers-count');
+        
+        function pingServer() {
+            fetch(pingUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if(data && data.count) {
+                        viewerCountElement.textContent = data.count;
+                    }
+                })
+                .catch(err => console.error('Gagal memproses view tracker:', err));
+        }
+
+        // Ping pertama saat halaman dimuat, lalu ulangi setiap 15 detik
+        pingServer();
+        setInterval(pingServer, 15000);
     });
 </script>
 @endpush

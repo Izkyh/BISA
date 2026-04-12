@@ -40,10 +40,16 @@
                                 {{ Str::limit($article->excerpt ?? strip_tags($article->content ?? ''), 130) }}
                             </p>
                             <div class="news-meta">
-                                <span>
-                                    <i class="fa-regular fa-calendar"></i>
-                                    {{ $article->created_at->format('d M Y') }}
-                                </span>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span>
+                                        <i class="fa-regular fa-calendar"></i>
+                                        {{ $article->created_at->format('d M Y') }}
+                                    </span>
+                                    <span title="Total Tayangan">
+                                        <i class="fa-regular fa-eye"></i>
+                                        {{ number_format($article->views ?? 0) }}
+                                    </span>
+                                </div>
                                 <span class="news-read-more">
                                     Baca <i class="fa-solid fa-arrow-right"></i>
                                 </span>

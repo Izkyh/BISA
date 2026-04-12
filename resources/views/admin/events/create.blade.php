@@ -81,14 +81,34 @@
                     <label class="form-label">Link Pendaftaran <small style="color:var(--muted);">(opsional)</small></label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
-                        <input type="url" name="link" class="form-control"
+                        <input type="url" name="link" class="form-control @error('link') is-invalid @enderror"
                                value="{{ old('link') }}" placeholder="https://forms.google.com/...">
                     </div>
+                    @error('link')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Aktifkan Donasi</label>
+                    <select name="is_donation_enabled" class="form-select">
+                        <option value="0" {{ old('is_donation_enabled', '0') == '0' ? 'selected' : '' }}>Tidak</option>
+                        <option value="1" {{ old('is_donation_enabled') == '1' ? 'selected' : '' }}>Ya</option>
+                    </select>
+                </div>
+
+                <div class="col-md-8">
+                    <label class="form-label">Link Donasi <small style="color:var(--muted);">(opsional)</small></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-heart"></i></span>
+                        <input type="url" name="donation_link" class="form-control @error('donation_link') is-invalid @enderror"
+                               value="{{ old('donation_link') }}" placeholder="https://...">
+                    </div>
+                    @error('donation_link')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                 </div>
 
                 <div class="col-12">
                     <label class="form-label">Gambar Event <small style="color:var(--muted);">(opsional, max 5MB)</small></label>
-                    <input type="file" name="image" class="form-control" accept="image/*">
+                    <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
+                    @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
             </div>
 

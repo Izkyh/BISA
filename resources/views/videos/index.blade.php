@@ -26,6 +26,18 @@
         </div>
     </div>
 
+    <div class="filter-tabs mb-4">
+        <a href="{{ route('videos.index') }}" class="filter-btn {{ !request('kategori') ? 'active' : '' }}">
+            Semua
+        </a>
+        @foreach($categories as $value => $label)
+            <a href="{{ route('videos.index', ['kategori' => $value]) }}"
+               class="filter-btn {{ request('kategori') === $value ? 'active' : '' }}">
+                {{ $label }}
+            </a>
+        @endforeach
+    </div>
+
     {{-- ── Video Grid ───────────────────────────────────────────────── --}}
     <div id="video-list" class="row g-4">
         @forelse($videos as $video)
@@ -60,6 +72,13 @@
                     @endif
 
                     <div class="video-card-content">
+                        @if($video->category)
+                            <div class="video-meta">
+                                <i class="fa-solid fa-tag"></i>
+                                {{ $categories[$video->category] ?? ucfirst($video->category) }}
+                            </div>
+                        @endif
+
                         <h6>{{ $video->title }}</h6>
 
                         @if($video->description)

@@ -28,9 +28,13 @@ class EventController extends Controller
             'start_time' => 'required',
             'end_time'   => 'required',
             'location'   => 'required|string|max:255',
+            'link'       => 'nullable|url',
+            'donation_link' => 'nullable|url|required_if:is_donation_enabled,1',
+            'image'      => 'nullable|image|max:5120',
         ]);
 
         $data = $request->except('image');
+        $data['is_donation_enabled'] = $request->boolean('is_donation_enabled');
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -58,9 +62,13 @@ class EventController extends Controller
             'start_time' => 'required',
             'end_time'   => 'required',
             'location'   => 'required|string|max:255',
+            'link'       => 'nullable|url',
+            'donation_link' => 'nullable|url|required_if:is_donation_enabled,1',
+            'image'      => 'nullable|image|max:5120',
         ]);
 
         $data = $request->except('image');
+        $data['is_donation_enabled'] = $request->boolean('is_donation_enabled');
 
         if ($request->hasFile('image')) {
             if ($event->image_path) {

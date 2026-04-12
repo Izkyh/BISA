@@ -33,7 +33,8 @@ class AppServiceProvider extends ServiceProvider
 
         // View Composer untuk Sidebar
         View::composer('components.sidebar', function ($view) {
-            $popularArticles = Article::orderBy('created_at', 'desc')
+            $popularArticles = Article::orderByDesc('views')
+                ->orderBy('created_at', 'desc')
                 ->take(3)
                 ->get();
 

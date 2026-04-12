@@ -10,7 +10,7 @@ class BoardMemberController extends Controller
 {
     private array $typeConfig = [
         'board'   => ['label' => 'Kepengurusan',        'icon' => 'bi-people-fill'],
-        'member'  => ['label' => 'Keanggotaan',          'icon' => 'bi-person-lines-fill'],
+        'member'  => ['label' => 'Guru Pengajar',        'icon' => 'bi-person-lines-fill'],
         'founder' => ['label' => 'Struktur Organisasi',  'icon' => 'bi-diagram-3-fill'],
     ];
 

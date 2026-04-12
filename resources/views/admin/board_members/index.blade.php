@@ -19,7 +19,7 @@
 <div class="d-flex gap-2 mb-4 flex-wrap">
     @foreach([
         'board'   => ['label' => 'Kepengurusan',       'icon' => 'bi-people'],
-        'member'  => ['label' => 'Keanggotaan',         'icon' => 'bi-person-lines-fill'],
+        'member'  => ['label' => 'Guru Pengajar',       'icon' => 'bi-person-lines-fill'],
         'founder' => ['label' => 'Struktur Organisasi', 'icon' => 'bi-diagram-3'],
     ] as $t => $cfg)
     <a href="{{ route('admin.board_members.index', ['type' => $t]) }}"

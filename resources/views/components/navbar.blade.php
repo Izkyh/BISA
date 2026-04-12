@@ -26,7 +26,7 @@
 
                 {{-- Media Dropdown --}}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {{ request()->is('artikel*') || request()->is('video*') || request()->is('kegiatan*') ? 'active' : '' }}"
+                    <a class="nav-link dropdown-toggle {{ request()->routeIs('articles.*') || request()->routeIs('videos.*') || request()->routeIs('events.*') || request()->routeIs('media-gallery.*') ? 'active' : '' }}"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Media
                     </a>
@@ -49,6 +49,12 @@
                                 <i class="fa-regular fa-calendar me-2"></i> Informasi Kegiatan
                             </a>
                         </li>
+                        <li>
+                            <a class="dropdown-item {{ request()->routeIs('media-gallery.*') ? 'active' : '' }}"
+                                href="{{ route('media-gallery.index') }}">
+                                <i class="fa-regular fa-image me-2"></i> Media Gallery
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -68,7 +74,7 @@
                         <li>
                             <a class="dropdown-item {{ request()->routeIs('profil.keanggotaan') ? 'active' : '' }}"
                                 href="{{ route('profil.keanggotaan') }}">
-                                <i class="fa-solid fa-id-card me-2"></i> Daftar Keanggotaan
+                                <i class="fa-solid fa-id-card me-2"></i> Daftar Guru Pengajar
                             </a>
                         </li>
                         <li>

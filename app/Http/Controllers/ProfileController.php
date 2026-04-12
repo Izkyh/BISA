@@ -18,12 +18,12 @@ class ProfileController extends Controller
 
     public function keanggotaan()
     {
-        $members = BoardMember::active()
+        $teachers = BoardMember::active()
             ->member()
             ->ordered()
             ->paginate(12);
 
-        return view('profil.keanggotaan', compact('members'));
+        return view('profil.keanggotaan', compact('teachers'));
     }
 
     public function struktur()

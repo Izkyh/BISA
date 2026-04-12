@@ -17,6 +17,8 @@ class Event extends Model
         'event_date',
         'location',
         'link',
+        'is_donation_enabled',
+        'donation_link',
         'image_path',
     ];
 
@@ -27,6 +29,7 @@ class Event extends Model
         'start_time' => 'datetime',
         'end_time' => 'datetime',
         'event_date' => 'date:Y-m-d',
+        'is_donation_enabled' => 'boolean',
     ];
 
     /**

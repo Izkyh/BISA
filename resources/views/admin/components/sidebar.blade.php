@@ -21,6 +21,10 @@
            class="s-link {{ request()->routeIs('admin.videos.*') ? 'active' : '' }}">
             <i class="bi bi-play-circle-fill"></i> Video
         </a>
+        <a href="{{ route('admin.media-galleries.index') }}"
+           class="s-link {{ request()->routeIs('admin.media-galleries.*') ? 'active' : '' }}">
+            <i class="bi bi-images"></i> Media Gallery
+        </a>
     </nav>
 
     <p class="sidebar-label">Organisasi</p>
@@ -42,7 +46,7 @@
                 </a>
                 <a href="{{ route('admin.board_members.index', ['type' => 'member']) }}"
                    class="s-link {{ $isBoardActive && request()->get('type') === 'member' ? 'active' : '' }}">
-                    <i class="bi bi-person-lines-fill"></i> Keanggotaan
+                    <i class="bi bi-person-lines-fill"></i> Guru Pengajar
                 </a>
                 <a href="{{ route('admin.board_members.index', ['type' => 'founder']) }}"
                    class="s-link {{ $isBoardActive && request()->get('type') === 'founder' ? 'active' : '' }}">

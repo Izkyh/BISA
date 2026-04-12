@@ -28,7 +28,7 @@ class EventController extends Controller
 
         $events = $query->paginate(6)->withQueryString();
 
-        $popularArticles = Article::latest()->take(5)->get();
+        $popularArticles = Article::orderByDesc('views')->latest()->take(5)->get();
         $upcomingEvents  = Event::where('event_date', '>=', now())
                                 ->orderBy('event_date')
                                 ->take(5)

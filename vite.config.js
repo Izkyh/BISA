@@ -12,15 +12,9 @@ export default defineConfig({
         }),
     ],
     build: {
-        // Optimize build performance
         cssCodeSplit: true,
-        minify: 'terser',
-        terserOptions: {
-            compress: {
-                drop_console: true,
-                drop_debugger: true,
-            },
-        },
+        minify: 'esbuild',
+        sourcemap: false,
         rollupOptions: {
             output: {
                 manualChunks: {
@@ -52,5 +46,8 @@ export default defineConfig({
         watch: {
             usePolling: false,
         },
+    },
+    esbuild: {
+        drop: ['console', 'debugger'],
     },
 });

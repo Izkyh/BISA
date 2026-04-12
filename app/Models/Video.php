@@ -10,8 +10,22 @@ class Video extends Model
 
     protected $fillable = [
         'title',
-        'youtube_url'
+        'youtube_url',
+        'category',
     ];
+
+    public const CATEGORY_PEMBELAJARAN = 'pembelajaran';
+    public const CATEGORY_KEGIATAN = 'kegiatan';
+    public const CATEGORY_SEMINAR = 'seminar';
+
+    public static function getCategories(): array
+    {
+        return [
+            self::CATEGORY_PEMBELAJARAN => 'Pembelajaran',
+            self::CATEGORY_KEGIATAN => 'Kegiatan',
+            self::CATEGORY_SEMINAR => 'Seminar',
+        ];
+    }
 
     /**
      * Extract YouTube Video ID dari URL

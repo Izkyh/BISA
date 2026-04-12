@@ -15,7 +15,9 @@ class VideoController extends Controller
 
     public function create()
     {
-        return view('admin.videos.create');
+        $categories = Video::getCategories();
+
+        return view('admin.videos.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -23,15 +25,18 @@ class VideoController extends Controller
         $request->validate([
             'title'       => 'required|string|max:255',
             'youtube_url' => 'required|url',
+            'category'    => 'required|in:' . implode(',', array_keys(Video::getCategories())),
         ]);
-        Video::create($request->only('title', 'youtube_url'));
+        Video::create($request->only('title', 'youtube_url', 'category'));
         return redirect()->route('admin.videos.index')
             ->with('success', 'Video berhasil ditambahkan');
     }
 
     public function edit(Video $video)
     {
-        return view('admin.videos.edit', compact('video'));
+        $categories = Video::getCategories();
+
+        return view('admin.videos.edit', compact('video', 'categories'));
     }
 
     public function update(Request $request, Video $video)
@@ -39,8 +44,9 @@ class VideoController extends Controller
         $request->validate([
             'title'       => 'required|string|max:255',
             'youtube_url' => 'required|url',
+            'category'    => 'required|in:' . implode(',', array_keys(Video::getCategories())),
         ]);
-        $video->update($request->only('title', 'youtube_url'));
+        $video->update($request->only('title', 'youtube_url', 'category'));
         return redirect()->route('admin.videos.index')
             ->with('success', 'Video berhasil diupdate');
     }

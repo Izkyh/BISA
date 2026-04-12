@@ -28,6 +28,7 @@
                 <th>Kategori</th>
                 <th>Tanggal</th>   {{-- ✅ fix: pakai event_date --}}
                 <th>Lokasi</th>
+                <th>Donasi</th>
                 <th>Status</th>
                 <th class="text-center">Aksi</th>
             </tr>
@@ -57,6 +58,15 @@
                 </td>
                 <td style="color:var(--muted);">{{ Str::limit($event->location, 28) }}</td>
                 <td>
+                    @if($event->is_donation_enabled && $event->donation_link)
+                        <a href="{{ $event->donation_link }}" target="_blank" rel="noopener noreferrer" class="badge" style="background:#ec48991a; color:#ec4899;">
+                            Aktif
+                        </a>
+                    @else
+                        <span class="badge" style="background:#8892a41a; color:#8892a4;">Nonaktif</span>
+                    @endif
+                </td>
+                <td>
                     @if($event->isUpcoming())
                         <span class="badge" style="background:#22c55e1a; color:#22c55e;">Upcoming</span>
                     @else
@@ -77,7 +87,7 @@
                 </td>
             </tr>
             @empty
-            <tr><td colspan="7" class="text-center py-5" style="color:var(--muted);">
+            <tr><td colspan="8" class="text-center py-5" style="color:var(--muted);">
                 <i class="bi bi-calendar-x d-block fs-2 mb-2"></i>Belum ada event
             </td></tr>
             @endforelse

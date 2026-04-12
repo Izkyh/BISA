@@ -26,6 +26,7 @@
                 <th style="width:44px;">#</th>
                 <th style="width:90px;">Thumbnail</th>
                 <th>Judul</th>
+                <th>Kategori</th>
                 <th>YouTube URL</th>
                 <th>Ditambahkan</th>
                 <th class="text-center">Aksi</th>
@@ -50,6 +51,11 @@
                     @endif
                 </td>
                 <td style="font-weight:500;">{{ Str::limit($video->title, 44) }}</td>
+                <td>
+                    <span class="badge" style="background:#4f8cff1a; color:#4f8cff;">
+                        {{ \App\Models\Video::getCategories()[$video->category] ?? '-' }}
+                    </span>
+                </td>
                 <td>
                     {{-- ✅ fix: youtube_url --}}
                     <a href="{{ $video->youtube_url }}" target="_blank"
@@ -76,7 +82,7 @@
                 </td>
             </tr>
             @empty
-            <tr><td colspan="6" class="text-center py-5" style="color:var(--muted);">
+            <tr><td colspan="7" class="text-center py-5" style="color:var(--muted);">
                 <i class="bi bi-camera-video d-block fs-2 mb-2"></i>Belum ada video
             </td></tr>
             @endforelse
