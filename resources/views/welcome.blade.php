@@ -7,10 +7,9 @@
     <section class="hero" id="hero">
         {{-- Slide backgrounds --}}
         <div class="hero-slides">
-            <div class="hero-slide active" style="background-image: url('{{ asset('foto/TJN_8122.JPG') }}')"></div>
-            <div class="hero-slide" style="background-image: url('{{ asset('foto/TJN_8122.JPG') }}')"></div>
-            <div class="hero-slide" style="background-image: url('{{ asset('foto/TJN_8122.JPG') }}')"></div>
-            <div class="hero-slide" style="background-image: url('{{ asset('foto/TJN_8122.JPG') }}')"></div>
+            <div class="hero-slide active" style="background-image: url('{{ asset('foto/TJN_7780.JPG') }}')"></div>
+            <div class="hero-slide" style="background-image: url('{{ asset('foto/TJN_7759.JPG') }}')"></div>
+
         </div>
 
         {{-- Overlay --}}
